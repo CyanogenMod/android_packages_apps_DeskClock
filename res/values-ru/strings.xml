@@ -110,4 +110,33 @@
     <string name="battery_charging_level" msgid="4391767951302394083">"<xliff:g id="NUMBER">%d</xliff:g><xliff:g id="PERCENT">%%</xliff:g>"</string>
     <string name="weather_fetch_failure" msgid="7517010911981312358">"Сейчас информация о погоде недоступна."</string>
     <string name="menu_item_dock_settings" msgid="3524235151132971114">"Настройки док-станции"</string>
+	<string name="alarm_limit_title">Максимальная продолжительность сигнала</string>
+    <string-array name="alarm_limit_entries">
+      <item>5 минут</item>
+      <item>15 минут</item>
+      <item>30 минут</item>
+      <item>60 минут</item>
+      <item>90 минут</item>
+      <item>120 минут</item>
+      <item>Бесконечно</item>
+    </string-array>
+    <string name="screensaver_timeout_title">Задержка заставки</string>
+    <string-array name="screensaver_timeout_entries">
+      <item>1 минута</item>
+      <item>5 минут</item>
+      <item>10 минут</item>
+      <item>15 минут</item>
+      <item>30 минут</item>
+      <item>60 минут</item>
+    </string-array>
+    <string name="color_picker">Цвет времени</string>
+    <string name="color_picker_title">Цвет времени (Заставка)</string>
+    <string name="color_picker_summary">Измените цвет времени на заставке</string>
+    <string name="color_picker_alpha">Прозрачность (Затемнение)</string>
+    <string name="color_picker_red">Красный</string>
+    <string name="color_picker_green">Зелёный</string>
+    <string name="color_picker_blue">Синий</string>
+    <string name="use_dual_mode_button">Одна кнопка</string>
+    <string name="use_dual_mode_button_on">Долгое нажатие на кнопке \"Отложить\", будет отключать будильник.</string>
+    <string name="use_dual_mode_button_off">Разные кнопки \"Отложить\" и \"Отключить\".</string>
 </resources>
