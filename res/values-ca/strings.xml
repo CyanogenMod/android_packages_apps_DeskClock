@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_label">Rellotge</string>
+  <string name="alarm_list_title">Alarmes</string>
+  <string name="add_alarm">Afegeix una alarma</string>
+  <string name="menu_desk_clock">Rellotge de l\'escriptori</string>
+  <string name="menu_edit_alarm">Edita l\'alarma</string>
+  <string name="delete_alarm">Suprimeix l\'alarma</string>
+  <string name="enable_alarm">Activa l\'alarma</string>
+  <string name="disable_alarm">Apaga l\'alarma</string>
+  <string name="delete_alarm_confirm">Aquesta alarma es suprimirà.</string>
+  <string name="show_clock">Mostra el rellotge</string>
+  <string name="hide_clock">Amaga el rellotge</string>
+  <string name="label">Etiqueta</string>
+  <string name="default_label">Alarma</string>
+  <string name="set_alarm">Estableix l\'alarma</string>
+  <string name="alarm_vibrate">Vibra</string>
+  <string name="alarm_repeat">Repeteix</string>
+  <string name="alert">To</string>
+  <string name="time">Hora</string>
+  <string name="alarm_alert_dismiss_text">Desactiva</string>
+  <string name="alarm_alert_alert_silenced">Alarma silenciada després de <xliff:g id="minutes">%d</xliff:g> minuts</string>
+  <string name="alarm_alert_snooze_text">Silencia</string>
+  <string name="alarm_alert_snooze_text_dual_mode">Silencia (mantén premut per desactivar)</string>
+  <string name="alarm_alert_snooze_set">Silenciada <xliff:g id="minutes">%d</xliff:g> minuts.</string>
+  <string name="day">1 dia</string>
+  <string name="days">"<xliff:g id="days">%s</xliff:g> dies"</string>
+  <string name="hour">1 hora</string>
+  <string name="hours"><xliff:g id="hours">%s</xliff:g> hores</string>
+  <string name="minute">1 minut</string>
+  <string name="minutes">"<xliff:g id="minutes">%s</xliff:g> minuts"</string>
+  <string name="every_day">cada dia</string>
+  <string name="never">Mai</string>
+  <string name="day_concat">,\u0020</string>
+  <string name="clock_instructions">Sel·lecciona un rellotge per mostrar.</string>
+  <string name="analog_gadget">Rellotge analògic</string>
+  <string name="settings">Preferències</string>
+  <string name="alarm_in_silent_mode_title">Alarma en mode silenciós</string>
+  <string name="alarm_in_silent_mode_summary">Fes sonar l\'alarma fins i tot quan el telèfon està en mode silenciós</string>
+  <string name="snooze_duration_title">Durada del silenciament</string>
+  <string name="done">Fet</string>
+  <string name="revert">Desfés</string>
+  <string name="delete">Suprimeix</string>
+  <string name="alarm_volume_title">Volum de l\'alarma</string>
+  <string name="alarm_volume_summary">Ajusta el volum de les alarmes</string>
+  <string name="silent_alarm_summary">Silenciós</string>
+  <string name="alarm_notify_text">Seleccioneu per posposar o desestimar aquesta alarma.</string>
+  <string name="alarm_notify_snooze_label"><xliff:g id="label">%s</xliff:g> (posposat)</string>
+  <string name="alarm_notify_snooze_text">Alarma per a les <xliff:g id="time">%s</xliff:g>. Sel·lecciona per a cancel·lar.</string>
+  <string name="volume_button_setting_title">Volum i Càmera</string>
+  <string name="volume_button_dialog_title">Efecte del botó</string>
+  <string name="volume_button_setting_summary">Estableix que farà cada botó en prémer-lo durant una alarma</string>
+  <string name="alarm_button_description">Alarmes</string>
+  <string name="gallery_button_description">Galeria</string>
+  <string name="music_button_description">Música</string>
+  <string name="nightmode_button_description">Enfosqueix</string>
+  <string name="home_button_description">Llançador</string>
+  <string name="desk_clock_button_description">Visualització del rellotge</string>
+  <string name="battery_charging_level"><xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
+  <string name="weather_fetch_failure">L\'informació meteorològica no està disponible en aquest moment.</string>
+  <string name="menu_item_dock_settings">Preferències del Dock</string>
+  <string name="alarm_limit_title">Durada màxima de l\'alarma</string>
+  <string name="screensaver_timeout_title">Temps d\'espera de la pantalla</string>
+  <string name="color_picker">Color de l\'hora</string>
+  <string name="color_picker_title">Color de l\'hora (salvapantalles)</string>
+  <string name="color_picker_summary">Canvia el color de l\'hora en el salvapantalles</string>
+  <string name="color_picker_sample">11:45</string>
+  <string name="color_picker_alpha">Transparència (només atenuat)</string>
+  <string name="color_picker_red">Vermell</string>
+  <string name="color_picker_green">Verd</string>
+  <string name="color_picker_blue">Blau</string>
+  <string name="use_dual_mode_button">Mode dual de silenciament</string>
+  <string name="use_dual_mode_button_on">Premeu llarg el botó de silenciar per a desactivar l\'alarma</string>
+  <string name="use_dual_mode_button_off">Separa els botons de silenciar i desactivar</string>
+  <string-array name="alarm_set">
+        <item>Aquesta alarma s\'ha establert per d\'aquí menys d\'un minut.</item>
+        <item>Aquesta alarma s\'ha establert per d\'aquí <xliff:g id="DAYS" example="2 days">%1$s</xliff:g>.</item>
+        <item>Aquesta alarma s\'ha establert per d\'aquí <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g>.</item>
+        <item>Aquesta alarma s\'ha establert per d\'aquí <xliff:g id="DAYS" example="2 days">%1$s</xliff:g> i <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g>.</item>
+        <item>Aquesta alarma s\'ha establert per d\'aquí <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+        <item>Aquesta alarma s\'ha establert per d\'aquí <xliff:g id="DAYS" example="2 days">%1$s</xliff:g> i <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+        <item>Aquesta alarma s\'ha establert per d\'aquí <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g> i <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+        <item>Aquesta alarma s\'ha establert per d\'aquí <xliff:g id="DAYS" example="2 days">%1$s</xliff:g>, <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g>, i <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+  </string-array>
+  <string-array name="snooze_duration_entries">
+    <item>5 minuts</item>
+    <item>10 minuts</item>
+    <item>15 minuts</item>
+    <item>20 minuts</item>
+    <item>25 minuts</item>
+    <item>30 minuts</item>
+  </string-array>
+  <string-array name="volume_button_setting_entries">
+    <item>Cap</item>
+    <item>Silencia</item>
+    <item>Desactiva</item>
+  </string-array>
+  <string-array name="alarm_limit_entries">
+    <item>5 minuts</item>
+    <item>15 minuts</item>
+    <item>30 minuts</item>
+    <item>60 minuts</item>
+    <item>90 minuts</item>
+    <item>120 minuts</item>
+    <item>Infinit</item>
+  </string-array>
+  <string-array name="screensaver_timeout_entries">
+    <item>1 minut</item>
+    <item>5 minuts</item>
+    <item>10 minuts</item>
+    <item>15 minuts</item>
+    <item>30 minuts</item>
+    <item>60 minuts</item>
+  </string-array>
+</resources>
