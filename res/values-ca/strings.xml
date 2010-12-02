@@ -57,7 +57,7 @@
   <string name="home_button_description">Llançador</string>
   <string name="desk_clock_button_description">Visualització del rellotge</string>
   <string name="battery_charging_level"><xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
-  <string name="weather_fetch_failure">L\'informació meteorològica no està disponible en aquest moment.</string>
+  <string name="weather_fetch_failure">La informació meteorològica no està disponible en aquest moment.</string>
   <string name="menu_item_dock_settings">Preferències del Dock</string>
   <string name="alarm_limit_title">Durada màxima de l\'alarma</string>
   <string name="screensaver_timeout_title">Temps d\'espera de la pantalla</string>
