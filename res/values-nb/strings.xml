@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--  Copyright (C) 2007 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -12,90 +12,342 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
- -->
+-->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_label" msgid="6674495003718166674">"Klokke"</string>
-    <string name="alarm_list_title" msgid="7589940465292950600">"Alarmer"</string>
-    <string name="add_alarm" msgid="5976616107390962899">"Legg til alarm"</string>
-    <string name="menu_desk_clock" msgid="3241995064554071588">"Skrivebordsklokke"</string>
-    <string name="menu_edit_alarm" msgid="7204602994918829751">"Rediger alarm"</string>
-    <string name="delete_alarm" msgid="3457780990646206817">"Slett alarm"</string>
-    <string name="enable_alarm" msgid="1834599140632142536">"Slå på alarm"</string>
-    <string name="disable_alarm" msgid="5889378670229554109">"Slå av alarm"</string>
-    <string name="delete_alarm_confirm" msgid="4237696873219106907">"Denne alarmen vil bli slettet."</string>
-    <string name="show_clock" msgid="8358759982675616915">"Vis klokke"</string>
-    <string name="hide_clock" msgid="3217727306480505694">"Skjul klokke"</string>
-    <string name="label" msgid="162189613902857319">"Etikett"</string>
-    <string name="default_label" msgid="5590025289805630372">"Alarm"</string>
-    <string name="set_alarm" msgid="9148359866152726808">"Sett alarm"</string>
-    <string name="alarm_vibrate" msgid="3476686921490362230">"Vibrer"</string>
-    <string name="alarm_repeat" msgid="7242985466344233206">"Gjenta"</string>
-    <string name="alert" msgid="6539852766423700221">"Ringetone"</string>
-    <string name="time" msgid="8067216534232296518">"Tidspunkt"</string>
-    <string name="alarm_alert_dismiss_text" msgid="4942914605480888820">"Slå av"</string>
-    <string name="alarm_alert_alert_silenced" msgid="7918075929961104202">"Alarmen ble slått av etter <xliff:g id="MINUTES">%d</xliff:g> minutter"</string>
-    <string name="alarm_alert_snooze_text" msgid="1774416052207651584">"Slumre"</string>
-    <string name="alarm_alert_snooze_set" msgid="656470966696912087">"Slumrer i <xliff:g id="MINUTES">%d</xliff:g> minutter."</string>
-  <string-array name="alarm_set">
-    <item msgid="5163476010406761625">"Alarmen ringer om mindre enn ett minutt."</item>
-    <item msgid="7110525731259629055">"Alarmen ringer om <xliff:g id="DAYS">%1$s</xliff:g>."</item>
-    <item msgid="7003982794086186185">"Alarmen ringer om <xliff:g id="HOURS">%2$s</xliff:g>."</item>
-    <item msgid="7311021123230077742">"Alarmen ringer om <xliff:g id="DAYS">%1$s</xliff:g> og <xliff:g id="HOURS">%2$s</xliff:g>."</item>
-    <item msgid="8431715191823114872">"Alarmen ringer om <xliff:g id="MINUTES">%3$s</xliff:g>."</item>
-    <item msgid="3244151088673185428">"Alarmen ringer om <xliff:g id="DAYS">%1$s</xliff:g> og <xliff:g id="MINUTES">%3$s</xliff:g>."</item>
-    <item msgid="3663661342600168814">"Alarmen ringer om <xliff:g id="HOURS">%2$s</xliff:g> og <xliff:g id="MINUTES">%3$s</xliff:g>."</item>
-    <item msgid="7779544127785487304">"Alarmen ringer om <xliff:g id="DAYS">%1$s</xliff:g>, <xliff:g id="HOURS">%2$s</xliff:g> og <xliff:g id="MINUTES">%3$s</xliff:g>."</item>
-  </string-array>
-    <string name="day" msgid="7984755014526510295">"1 dag"</string>
-    <string name="days" msgid="2070509222727852210">"<xliff:g id="DAYS">%s</xliff:g> dager"</string>
-    <string name="hour" msgid="2546819039651509323">"1 time"</string>
-    <string name="hours" msgid="2071487018566991613">"<xliff:g id="HOURS">%s</xliff:g> timer"</string>
-    <string name="minute" msgid="2486157997434653710">"1 minutt"</string>
-    <string name="minutes" msgid="6115838729146292526">"<xliff:g id="MINUTES">%s</xliff:g> minutter"</string>
-    <string name="every_day" msgid="1058994798884544691">"hver dag"</string>
-    <string name="never" msgid="54104287800571769">"Aldri"</string>
-    <string name="day_concat" msgid="971998564991636532">", "</string>
-    <string name="clock_instructions" msgid="3118560284915857690">"Velg klokken som skal vises."</string>
-    <string name="analog_gadget" msgid="1670505720837152766">"Analog klokke"</string>
-    <string name="settings" msgid="5849739030579520686">"Innstillinger"</string>
-    <string name="alarm_in_silent_mode_title" msgid="3892612644543516705">"Alarm i stillemodus"</string>
-    <string name="alarm_in_silent_mode_summary" msgid="6042500263899922832">"Spill alarm selv når telefonen er i stillemodus"</string>
-    <string name="snooze_duration_title" msgid="1471249885139952670">"Slumrevarighet"</string>
-  <string-array name="snooze_duration_entries">
-    <item msgid="8337408933053603125">"5 minutter"</item>
-    <item msgid="5294206441496024610">"10 minutter"</item>
-    <item msgid="2165904039211935470">"15 minutter"</item>
-    <item msgid="7248236967714374250">"20 minutter"</item>
-    <item msgid="738394723625179423">"25 minutter"</item>
-    <item msgid="1180222611308391616">"30 minutter"</item>
-  </string-array>
-    <string name="done" msgid="6509722361933858451">"OK"</string>
-    <string name="revert" msgid="9100911171235162926">"Tilbakestill"</string>
-    <string name="delete" msgid="5732434972457000541">"Slett"</string>
-    <string name="alarm_volume_title" msgid="8506245173912428522">"Alarmvolum"</string>
-    <string name="alarm_volume_summary" msgid="8957440373896242438">"Still inn volumet på alarmer"</string>
-    <string name="silent_alarm_summary" msgid="8605302849408279221">"Stille"</string>
-    <string name="alarm_notify_text" msgid="4146350965933990093">"Velg å slumre eller slå av alarmen"</string>
-    <string name="alarm_notify_snooze_label" msgid="5404083762646377829">"<xliff:g id="LABEL">%s</xliff:g> (slumre)"</string>
-    <string name="alarm_notify_snooze_text" msgid="8004830999152609519">"Alarmen er innstilt på <xliff:g id="TIME">%s</xliff:g>. Velg for å avbryte."</string>
-    <string name="volume_button_setting_title" msgid="8155275533660105161">"Volum og kamera"</string>
-    <string name="volume_button_dialog_title" msgid="8768042543750036853">"Knappefunksjon"</string>
-    <string name="volume_button_setting_summary" msgid="4776447991226047070">"Still inn disse knappenes funksjon ved alarm"</string>
-  <string-array name="volume_button_setting_entries">
-    <item msgid="4520420953175098625">"Ingen"</item>
-    <item msgid="7111908302622811168">"Slumre"</item>
-    <item msgid="8573552194573068996">"Slå av"</item>
-  </string-array>
-    <string name="alarm_button_description" msgid="740283647046258651">"Alarmer"</string>
-    <string name="gallery_button_description" msgid="1151743663255257668">"Galleri"</string>
-    <string name="music_button_description" msgid="1626593420810117999">"Musikk"</string>
-    <string name="nightmode_button_description" msgid="990894208217576381">"Demp"</string>
-    <string name="home_button_description" msgid="3383859096809056157">"Hjem"</string>
-    <string name="desk_clock_button_description" msgid="968868045496561043">"Klokkeskjerm"</string>
-    <string name="battery_charging_level" msgid="4391767951302394083">"<xliff:g id="NUMBER">%d</xliff:g><xliff:g id="PERCENT">%%</xliff:g>"</string>
-    <string name="weather_fetch_failure" msgid="7517010911981312358">"Værinformasjonen er for øyeblikket ikke tilgjengelig."</string>
-    <string name="menu_item_dock_settings" msgid="3524235151132971114">"Innstillinger for forankringsstasjon"</string>
-    <string name="alarm_klaxon_service_desc" msgid="2153290655559916468">"Lydavspillingstjeneste for alarmer som er angitt i DeskClock."</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- -->
+    <!-- Label shown on launcher icon -->
+    <string name="app_label">Klokke</string>
+
+    <!-- Title for AlarmClock activity -->
+    <string name="alarm_list_title">Alarmer</string>
+
+    <!-- Menu item on Alarm Clock screen: Add alarm -->
+    <string name="add_alarm">Legg til alarm</string>
+
+    <!-- Menu item on Alarm Clock screen: Desk clock -->
+    <string name="menu_desk_clock">Skrivebordsklokke</string>
+
+    <!-- Menu item on Alarm Clock screen: Edit alarm -->
+    <string name="menu_edit_alarm">Rediger alarm</string>
+
+    <!-- Context Menu Item on Alarm Settings screen: Delete alarm -->
+    <string name="delete_alarm">Slett alarm</string>
+
+    <!-- Context Menu Item on Alarm Settings screen: Enable alarm -->
+    <string name="enable_alarm">Slå på alarm</string>
+
+    <!-- Context Menu Item on Alarm Settings screen: Disable alarm -->
+    <string name="disable_alarm">Slå av alarm</string>
+
+    <!-- Delete alarm confirmation dialog message. -->
+    <string name="delete_alarm_confirm">Denne alarmen vil bli slettet.</string>
+
+    <!-- Menu item on Alarm Clock screen: Show clock -->
+    <string name="show_clock">Vis klokke</string>
+
+    <!-- Menu item on Alarm Clock screen: Hide clock -->
+    <string name="hide_clock">Skjul klokke</string>
+
+    <!-- Setting label on Set alarm screen: Label -->
+    <string name="label">Navn</string>
+
+    <!-- Default label to display for an alarm -->
+    <string name="default_label">Alarm</string>
+
+    <!-- Setting label on Set alarm screen: Application to launch -->
+    <string name="application">Applikasjon</string>
+
+    <!-- Title on the application picker -->
+    <string name="application_title">Starte en applikasjon</string>
+
+    <!-- Option to not launch an application -->
+    <string name="application_none">Ingen</string>
+
+	<!-- Setting label on Set alarm screen: Show dialog -->
+	<string name="no_dialog">Skjul meldingsvindu</string>
+
+	<!-- Summary when dialog is hidden -->
+	<string name="no_dialog_on">Vindu for å slumre/slå av alarm vil bli vist</string>
+
+	<!-- Summary when dialog will be shown -->
+	<string name="no_dialog_off">Vindu for å slumre/slå av alarm vil ikke bli vist</string>
+
+    <!-- Preference category on Alarm Settings screen: Set alarm -->
+    <string name="set_alarm">Sett alarm</string>
+
+    <!-- Setting labels on Set alarm screen: Vibration on or off -->
+    <string name="alarm_vibrate">Vibrer</string>
+
+    <!-- Setting labels on Set alarm screen: Repeat -->
+    <string name="alarm_repeat">Gjenta</string>
+
+    <!-- Setting labels on Set alarm screen: Select alarm ringtone  -->
+    <string name="alert">Ringelyd</string>
+
+    <!-- Setting labels on Set alarm screen: Set time  -->
+    <string name="time">Tidspunkt</string>
+
+    <!-- Button labels on the alarm dialog: Dismiss -->
+    <string name="alarm_alert_dismiss_text">Slå av</string>
+
+    <!-- Alarm Alert screen: this message is shown after an alarm rung
+         unattended for a number of minutes.  It tells the user that
+         the alarm has been silenced.-->
+    <string name="alarm_alert_alert_silenced">Alarmen ble slått av etter <xliff:g id="minutes">%d</xliff:g> minutter</string>
+
+    <!-- Button labels on the alarm dialog: Snooze -->
+    <string name="alarm_alert_snooze_text">Slumre</string>
+
+    <!-- Button labels on the alarm dialog: Snooze & dismiss (when dual-mode button enabled) -->
+    <string name="alarm_alert_snooze_text_dual_mode">Slumre (hold inne for å slå av)</string>
+
+    <!-- Toast that appears after Alarm is snoozed from the Alarm
+         dialog. Says the alarm will snooze for xxx minutes.  -->
+    <string name="alarm_alert_snooze_set">Slumrer i <xliff:g id="minutes">%d</xliff:g> minutter.</string>
+
+    <!-- 0: nothing
+         1: days
+         2:      hours
+         3: days hours
+         4:            minutes
+         5: days       minutes
+         6:      hours minutes
+         7: days hours minutes
+    --><skip />
+
+    <!-- Alarm confirmation toast: Describes how long from now until
+         alarm fires -->
+    <string-array name="alarm_set">
+        <item>Alarmen ringer om mindre enn ett minutt.</item>
+        <item>Alarmen ringer om <xliff:g id="DAYS" example="2 days">%1$s</xliff:g>.</item>
+        <item>Alarmen ringer om <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g>.</item>
+        <item>Alarmen ringer om <xliff:g id="DAYS" example="2 days">%1$s</xliff:g> og <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g>.</item>
+        <item>Alarmen ringer om <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+        <item>Alarmen ringer om <xliff:g id="DAYS" example="2 days">%1$s</xliff:g> og <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+        <item>Alarmen ringer om <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g> og <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+        <item>Alarmen ringer om <xliff:g id="DAYS" example="2 days">%1$s</xliff:g>, <xliff:g id="HOURS" example="2 hours">%2$s</xliff:g>, og <xliff:g id="MINUTES" example="2 minutes">%3$s</xliff:g>.</item>
+    </string-array>
+
+    <!-- Alarm confirmation toast: singular day -->
+    <string name="day">"1 dag"</string>
+
+    <!-- Alarm confirmation toast: plural days -->
+    <string name="days">"<xliff:g id="days">%s</xliff:g> dager"</string>
+
+    <!-- Alarm confirmation toast: singular hour -->
+    <string name="hour">1 time</string>
+
+    <!-- Alarm confirmation toast: plural hours -->
+    <string name="hours"><xliff:g id="hours">%s</xliff:g> timer</string>
+
+    <!-- Alarm confirmation toast: singular minute  -->
+    <string name="minute">"1 minutt"</string>
+
+    <!-- Alarm confirmation toast: plural minutes  -->
+    <string name="minutes">"<xliff:g id="minutes">%s</xliff:g> minutter"</string>
+
+    <!-- Repeat options that appear under an alarm on main Alarm Clock
+         screen to identify repetition schedule: special case for when
+         the alarm is set to repeat every day -->
+    <string name="every_day">hver dag</string>
+
+    <!-- Repeat options that appear under an alarm on main Alarm Clock
+         screen to identify repetition schedule: special case for when
+         the alarm is set to never repeat -->
+    <string name="never">Aldri</string>
+
+    <!-- Repeat options that appear under an alarm on main Alarm Clock
+         screen to identify repetition schedule: concatenate days with
+         this character, i.e. "Mon, Tue, Wed" -->
+    <string name="day_concat">", "</string>
+
+    <!-- Appears at the top of the Clock Picker screen: Tell user to
+         select a clock to display -->
+    <string name="clock_instructions">Velg klokken som skal vises.</string>
+
+    <!-- Label for analog clock gadget, shown in list of all gadgets -->
+    <string name="analog_gadget">Analog klokke</string>
+
+    <!-- Menu item title for general Alarm Clock Settings -->
+    <string name="settings">Innstillinger</string>
+
+    <!-- Setting title for whether the alarm should play in silent mode.
+         Usually, silent mode only affects the ringer, but this setting
+         will make the alarms respect silent mode too. -->
+    <string name="alarm_in_silent_mode_title">Ring i stillemodus</string>
+
+    <!-- Setting summary for whether the alarm should play in silent mode. -->
+    <string name="alarm_in_silent_mode_summary">Ring selv om telefonen er i stillemodus</string>
+
+    <!-- Setting title for changing the snooze duration. -->
+    <string name="snooze_duration_title">Slumrevarighet</string>
+
+    <!-- Entries listed in the ListPreference when invoking the snooze duration
+         preference. -->
+    <string-array name="snooze_duration_entries">
+      <item>5 minutter</item>
+      <item>10 minutter</item>
+      <item>15 minutter</item>
+      <item>20 minutter</item>
+      <item>25 minutter</item>
+      <item>30 minutter</item>
+    </string-array>
+
+    <!-- Values that are retrieved from the ListPreference. These must match
+         the snooze_duration_entries above. -->
+    <string-array name="snooze_duration_values" translatable="false">
+      <item>5</item>
+      <item>10</item>
+      <item>15</item>
+      <item>20</item>
+      <item>25</item>
+      <item>30</item>
+    </string-array>
+
+    <!-- Done button when editing an alarm. -->
+    <string name="done">OK</string>
+
+    <!-- Revert button when editing an alarm. -->
+    <string name="revert">Tilbakestill</string>
+
+    <!-- Delete button when editing an alarm. -->
+    <string name="delete">Slett</string>
+
+    <!-- Setting title for changing the alarm volume. -->
+    <string name="alarm_volume_title">Volum</string>
+
+    <!-- Setting summary for changing the alarm volume. -->
+    <string name="alarm_volume_summary">Still inn volumet på alarmer</string>
+
+    <!-- Summary for the alarm preference when silent is chosen. -->
+    <string name="silent_alarm_summary">Stille</string>
+
+    <!-- Text to display in the small text of the notification -->
+    <string name="alarm_notify_text">Velg å slumre eller slå av alarmen</string>
+
+    <!-- Text to display in the notification ticker and label -->
+    <string name="alarm_notify_snooze_label"><xliff:g id="label">%s</xliff:g> (slumre)</string>
+
+    <!-- Text to display in the notification when the alarm has been snoozed -->
+    <string name="alarm_notify_snooze_text">Alarmen er innstilt på <xliff:g id="time">%s</xliff:g>. Velg for å avbryte.</string>
+
+    <!-- Title of the setting to change the volume/camera button behavior. -->
+    <string name="volume_button_setting_title">Volum- og kameraknapp</string>
+
+    <!-- Dialog title of the volume and power setting. -->
+    <string name="volume_button_dialog_title">Knappefunksjon</string>
+
+    <!-- The summary of the side button setting. -->
+    <string name="volume_button_setting_summary">Velg funksjonen til disse knappene</string>
+
+    <!-- Entries listed in the setting for the side-button action. -->
+    <string-array name="volume_button_setting_entries">
+      <item>Ingen</item>
+      <item>Slumre</item>
+      <item>Slå av</item>
+    </string-array>
+
+    <!-- Values for the side-button setting. -->
+    <string-array name="volume_button_setting_values" translatable="false">
+      <item>0</item>
+      <item>1</item>
+      <item>2</item>
+    </string-array>
+
+    <!-- Accessibility labels for Clock activity buttons --><skip/>
+    <string name="alarm_button_description">Alarmer</string>
+    <string name="gallery_button_description">Galleri</string>
+    <string name="music_button_description">Musikk</string>
+    <string name="nightmode_button_description">Demp</string>
+    <string name="home_button_description">Hjem</string>
+    <string name="desk_clock_button_description">Klokkeskjerm</string>
+
+    <!-- A short representation of charging information, e.g "34%" -->
+    <string name="battery_charging_level"><xliff:g id="number">%d</xliff:g><xliff:g id="percent">%%</xliff:g></string>
+
+    <!-- What to show the user if the weather widget exists but fails to
+         respond. This is a sign of an error; if the weather widget is not
+         present on the device, we show nothing at all. -->
+    <string name="weather_fetch_failure">Værinformasjon er for øyeblikket ikke tilgjengelig.</string>
+
+    <string name="menu_item_dock_settings" msgid="9161438664257429372">Forankringsstasjon</string>
+
+    <!-- Setting title for setting alarm time limit -->
+    <string name="alarm_limit_title">Maksimum varighet</string>
+
+    <string name="alarm_klaxon_service_desc">Lydavspillingstjeneste for alarmer som er angitt i DeskClock.</string>
+
+    <!-- Entries listed in the ListPreference when invoking the max alarm duration
+         preference. -->
+    <string-array name="alarm_limit_entries">
+      <item>5 minutter</item>
+      <item>15 minutter</item>
+      <item>30 minutter</item>
+      <item>60 minutter</item>
+      <item>90 minutter</item>
+      <item>120 minutter</item>
+      <item>Uendelig</item>
+    </string-array>
+
+    <!-- Values that are retrieved from the ListPreference. These must match
+         the alarm_limit_entries above. -->
+    <string-array name="alarm_limit_values">
+      <item>5</item>
+      <item>15</item>
+      <item>30</item>
+      <item>60</item>
+      <item>90</item>
+      <item>120</item>
+      <item>-1</item>
+    </string-array>
+
+    <!-- Setting title for setting alarm time limit -->
+    <string name="screensaver_timeout_title">Tidsavbrudd for skjermbeskytter</string>
+
+    <!-- Entries listed in the ListPreference when invoking the max alarm duration
+         preference. -->
+    <string-array name="screensaver_timeout_entries">
+      <item>1 minutt</item>
+      <item>5 minutter</item>
+      <item>10 minutter</item>
+      <item>15 minutter</item>
+      <item>30 minutter</item>
+      <item>60 minutter</item>
+    </string-array>
+
+    <!-- Values that are retrieved from the ListPreference. These must match
+         the alarm_limit_entries above. -->
+    <string-array name="screensaver_timeout_values">
+      <item>1</item>
+      <item>5</item>
+      <item>10</item>
+      <item>15</item>
+      <item>30</item>
+      <item>60</item>
+    </string-array>
+
+    <!-- Setting title for screensaver time color picker general title-->
+    <string name="color_picker">Farge på klokke</string>
+
+    <!-- Setting title for screensaver time color picker -->
+    <string name="color_picker_title">Farge (skjermsparer)</string>
+
+    <!-- Setting title for screensaver time color picker -->
+    <string name="color_picker_summary">Velg farge på klokke i skjermsparermodus</string>
+
+    <!-- Sample time used in color picker -->
+    <string name="color_picker_sample">11:45</string>
+
+    <!-- Labels for colors in color picker -->
+    <string name="color_picker_alpha">Gjennomsiktighet</string>
+    <string name="color_picker_red">Rød</string>
+    <string name="color_picker_green">Grønn</string>
+    <string name="color_picker_blue">Blå</string>
+
+    <!-- Settings strings for dual-mode button -->
+    <string name="use_dual_mode_button">Dobbeltmodus</string>
+    <string name="use_dual_mode_button_on">Hold inne «slumre» for å slå av alarm</string>
+    <string name="use_dual_mode_button_off">«Slumre» og «slå av» er egne knapper</string>
+
 </resources>
