@@ -62,5 +62,6 @@
         android:showDefault="false"
         android:persistent="false"
         android:showSilent="true" />
+    <CheckBoxPreference android:summaryOff="off" android:title="Fade-in" android:key="fade-in" android:summaryOn="on" android:defaultValue="true"/>
 
 </PreferenceScreen>
