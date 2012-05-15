@@ -16,6 +16,9 @@
 
 package com.android.deskclock;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +38,62 @@ import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
+class Fader extends TimerTask {
+    public static final int DEFAULT_TOME_TO_FADE = 1000;
+    private int period;
+    private float startVolume;
+    private float targetVolume;
+    private float timeToFade;
+
+    private long startTime;
+
+    private Timer timer;
+    private MediaPlayer player;
+
+    public void startFading(MediaPlayer player, int timeToFade,
+			float startVolume, float targetVolume) {
+	if (timeToFade != 0) {
+	    this.player = player;
+	    this.timeToFade = timeToFade;
+	    this.startVolume = startVolume;
+	    this.targetVolume = targetVolume;
+
+	    startTime = System.currentTimeMillis();
+	    timer.schedule(this, 0, period);
+	}
+    }
+
+    public void stopFading() {
+	timeToFade = 0;
+	this.cancel();
+    }
+
+    public Fader() {
+	period = DEFAULT_TOME_TO_FADE;
+	timeToFade = 0;
+	timer = new Timer();
+    }
+
+    public Fader(int period) {
+	this.period = period;
+	timeToFade = 0;
+	timer = new Timer();
+    }
+
+    @Override
+    public void run() {
+	float fadingPos = (System.currentTimeMillis() - startTime) / timeToFade;
+	if (fadingPos > 1) {
+	    stopFading();
+	} else {
+	    float volume = startVolume + (targetVolume - startVolume)
+	    * (System.currentTimeMillis() - startTime) / timeToFade;
+	    player.setVolume(volume, volume);
+	}
+    }
+
+}
+
 /**
  * Manages alarms and vibe. Runs as a service so that it can continue to play
  * if another activity overrides the AlarmAlert dialog.
@@ -52,7 +111,7 @@ public class AlarmKlaxon extends Service {
     private long mStartTime;
     private TelephonyManager mTelephonyManager;
     private int mInitialCallState;
-
+    private Fader fader;
     // Internal messages
     private static final int KILLER = 1000;
     private Handler mHandler = new Handler() {
@@ -93,6 +152,7 @@ public class AlarmKlaxon extends Service {
         mTelephonyManager.listen(
                 mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
         AlarmAlertWakeLock.acquireCpuWakeLock(this);
+	fader = new Fader();
     }
 
     @Override
@@ -237,6 +297,8 @@ public class AlarmKlaxon extends Service {
             player.setLooping(true);
             player.prepare();
             player.start();
+            if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("fade-in", true))
+            	fader.startFading(player, 60000, 0.0f, 1.0f);
         }
     }
 
@@ -261,6 +323,9 @@ public class AlarmKlaxon extends Service {
 
             Intent alarmDone = new Intent(Alarms.ALARM_DONE_ACTION);
             sendBroadcast(alarmDone);
+
+            // Stop fading
+            fader.stopFading();
 
             // Stop audio playing
             if (mMediaPlayer != null) {
