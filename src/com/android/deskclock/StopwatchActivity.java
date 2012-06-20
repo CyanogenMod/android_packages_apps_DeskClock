@@ -48,6 +48,7 @@ public class StopwatchActivity extends Activity {
 				break;
 
 			case MSG_UPDATE_TIMER:
+				running = true;
 				mTime = timer.getElapsedTime();
 				time1.setText(getTimeStr(mTime));
 				time2.setText(" " + addZeroLong(mTime));
