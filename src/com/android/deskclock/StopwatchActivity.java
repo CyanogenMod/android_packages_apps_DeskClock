@@ -183,7 +183,7 @@ public class StopwatchActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		long start = Long.parseLong(getSharedPreferences("mStartTime", MODE_PRIVATE).getString(
-				"mStartTime", "#00000000"));
+				"mStartTime", "-1"));
 		if (start!=-1){
 			StopWatch.init(start);
 			mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);			
