@@ -48,7 +48,6 @@ public class StopwatchActivity extends Activity {
 				break;
 
 			case MSG_UPDATE_TIMER:
-				running = true;
 				mTime = timer.getElapsedTime();
 				time1.setText(getTimeStr(mTime));
 				time2.setText(" " + addZeroLong(mTime));
@@ -186,6 +185,7 @@ public class StopwatchActivity extends Activity {
 		long start = Long.parseLong(getSharedPreferences("mStartTime", MODE_PRIVATE).getString(
 				"mStartTime", "-1"));
 		if (start!=-1){
+			running = true;
 			StopWatch.init(start);
 			mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);			
 		}
