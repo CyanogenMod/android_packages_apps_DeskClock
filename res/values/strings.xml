@@ -327,8 +327,18 @@
 
     <!-- Label on the main screen control used to set alarm when there is already an existing alarm [CHAR LIMIT=30]-->
     <string name="control_set_alarm_with_existing">Alarm set: <xliff:g id="time">%s</xliff:g></string>
-	
-	
+
+    <!-- Shake to snooze/dismiss/nothing alarm -->
+    
+    <string name="shake_summary">Shake to
+        <xliff:g id="action">%s</xliff:g></string>
+    <string name="shake_dialog">Shake device to&#8230;</string>
+    <string name="math_title">Math quiz</string>
+    <string name="math_summary">Solve a math quiz to stop the Alarm</string>
+    <string name="math_dialog">Are you awake?</string>
+    <string name="increasing_volume_title">Increasing volume</string>
+    <string name="increasing_volume_summary">Use the option below to set the max. volume level</string>
+    
     <!-- Stopwatch label -->
     <string name="stopwatch_activity">Stopwatch</string>
     <string name="stopwatch_pause">Pause</string>

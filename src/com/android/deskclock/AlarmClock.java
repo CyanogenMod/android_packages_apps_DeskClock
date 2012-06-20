@@ -24,29 +24,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CursorAdapter;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
-
 import java.util.Calendar;
 
 /**
  * AlarmClock application.
  */
-public class AlarmClock extends Activity implements OnItemClickListener {
+public class AlarmClock extends Activity {
 
     static final String PREFERENCES = "AlarmClock";
 
@@ -87,20 +84,32 @@ public class AlarmClock extends Activity implements OnItemClickListener {
         public void bindView(View view, Context context, Cursor cursor) {
             final Alarm alarm = new Alarm(cursor);
 
-            View indicator = view.findViewById(R.id.indicator);
+           LinearLayout mainView = 
+                (LinearLayout) view.findViewById(R.id.main_view);
+	   mainView.setOnClickListener(new OnClickListener() {
 
-            // Set the initial state of the clock "checkbox"
-            final CheckBox clockOnOff =
-                    (CheckBox) indicator.findViewById(R.id.clock_onoff);
-            clockOnOff.setChecked(alarm.enabled);
-
-            // Clicking outside the "checkbox" should also change the state.
-            indicator.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    clockOnOff.toggle();
-                    updateAlarm(clockOnOff.isChecked(), alarm);
-                }
+				@Override
+				public void onClick(View v) {
+					Intent intent = new Intent(getBaseContext(), SetAlarm.class);
+			        intent.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
+			        startActivity(intent);					
+				}	
             });
+			
+            View indicator = view.findViewById(R.id.indicator);
+    	    Switch clockOnOff = (Switch) indicator
+					.findViewById(R.id.clock_onoff);
+	    clockOnOff.setOnCheckedChangeListener(null);
+	    clockOnOff.setChecked(alarm.enabled);
+	    clockOnOff.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+				boolean isChecked) {
+				updateAlarm(isChecked, alarm);
+
+			}
+	    });
 
             DigitalClock digitalClock =
                     (DigitalClock) view.findViewById(R.id.digitalClock);
@@ -207,8 +216,6 @@ public class AlarmClock extends Activity implements OnItemClickListener {
         AlarmTimeAdapter adapter = new AlarmTimeAdapter(this, mCursor);
         mAlarmsList.setAdapter(adapter);
         mAlarmsList.setVerticalScrollBarEnabled(true);
-        mAlarmsList.setOnItemClickListener(this);
-        mAlarmsList.setOnCreateContextMenuListener(this);
 
         View addAlarm = findViewById(R.id.add_alarm);
         addAlarm.setOnClickListener(new View.OnClickListener() {
@@ -246,39 +253,6 @@ public class AlarmClock extends Activity implements OnItemClickListener {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View view,
-            ContextMenuInfo menuInfo) {
-        // Inflate the menu from xml.
-        getMenuInflater().inflate(R.menu.context_menu, menu);
-
-        // Use the current item to create a custom view for the header.
-        final AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-        final Cursor c =
-                (Cursor) mAlarmsList.getAdapter().getItem(info.position);
-        final Alarm alarm = new Alarm(c);
-
-        // Construct the Calendar to compute the time.
-        final Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, alarm.hour);
-        cal.set(Calendar.MINUTE, alarm.minutes);
-        final String time = Alarms.formatTime(this, cal);
-
-        // Inflate the custom view and set each TextView's text.
-        final View v = mFactory.inflate(R.layout.context_menu_header, null);
-        TextView textView = (TextView) v.findViewById(R.id.header_time);
-        textView.setText(time);
-        textView = (TextView) v.findViewById(R.id.header_label);
-        textView.setText(alarm.label);
-
-        // Set the custom view on the menu.
-        menu.setHeaderView(v);
-        // Change the text based on the state of the alarm.
-        if (alarm.enabled) {
-            menu.findItem(R.id.enable_alarm).setTitle(R.string.disable_alarm);
-        }
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_settings:
@@ -304,15 +278,5 @@ public class AlarmClock extends Activity implements OnItemClickListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.alarm_list_menu, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public void onItemClick(AdapterView parent, View v, int pos, long id) {
-        final Cursor c = (Cursor) mAlarmsList.getAdapter()
-                .getItem(pos);
-        final Alarm alarm = new Alarm(c);
-        Intent intent = new Intent(this, SetAlarm.class);
-        intent.putExtra(Alarms.ALARM_INTENT_EXTRA, alarm);
-        startActivity(intent);
     }
 }

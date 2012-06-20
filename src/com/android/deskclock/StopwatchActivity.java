@@ -118,7 +118,7 @@ public class StopwatchActivity extends Activity {
 		time2.setText(" 000");
 		start.setText(getString(R.string.stopwatch_start));
 		clear.setText(getString(R.string.stopwatch_reset));
-		
+
 		time1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -173,8 +173,8 @@ public class StopwatchActivity extends Activity {
 		if (x > 0) {
 			String a[] = {};
 			String b[] = {};
-			mListView.setAdapter(new StopwatchAdapter(mContext,
-					line1.toArray(a), line2.toArray(b)));
+			mListView.setAdapter(new StopwatchAdapter(mContext, line1
+					.toArray(a), line2.toArray(b)));
 		} else {
 			mListView.setAdapter(null);
 		}
@@ -182,22 +182,32 @@ public class StopwatchActivity extends Activity {
 
 	protected void onResume() {
 		super.onResume();
-		if (running)
-			mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);
+		long start = Long.parseLong(getSharedPreferences("mStartTime", MODE_PRIVATE).getString(
+				"mStartTime", "#00000000"));
+		if (start!=-1){
+			StopWatch.init(start);
+			mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);			
+		}
 	}
 
 	protected void onPause() {
 		super.onPause();
-		if (running)
+		if (running) {
 			mHandler.sendEmptyMessage(MSG_HIDE_TIMER);
+			getSharedPreferences("mStartTime", MODE_PRIVATE).edit()
+					.putString("mStartTime", StopWatch.getStartTime()).commit();
+		} else {
+			getSharedPreferences("mStartTime", MODE_PRIVATE).edit()
+					.putString("mStartTime", "-1").commit();
+		}
 	}
 
-	public class StopWatch {
-		private long startTime = 0;
+	public static class StopWatch {
+		private static long startTime = 0;
 		private long pauseTime = 0;
 
 		public void start() {
-			this.startTime = System.currentTimeMillis()
+			StopWatch.startTime = System.currentTimeMillis()
 					- (this.pauseTime == -1 ? 0 : this.pauseTime);
 			this.pauseTime = 0;
 		}
@@ -205,6 +215,14 @@ public class StopwatchActivity extends Activity {
 		public void pause() {
 			if (this.pauseTime == 0)
 				this.pauseTime = System.currentTimeMillis() - startTime;
+		}
+
+		public static void init(long time) {
+			startTime = time;
+		}
+
+		static public String getStartTime() {
+			return "" + startTime;
 		}
 
 		public void clear() {

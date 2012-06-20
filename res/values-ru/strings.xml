@@ -144,11 +144,22 @@
       <item>Отложить будильник</item>
       <item>Выключить будильник</item>
     </string-array>
-	
+    
 	<!-- Stopwatch label -->
     <string name="stopwatch_activity">Секундомер</string>
     <string name="stopwatch_pause">Пауза</string>
     <string name="stopwatch_start">Старт</string>
     <string name="stopwatch_lap">Круг</string>
     <string name="stopwatch_reset">Сбросить</string>
+    
+    <!-- Shake to snooze/dismiss/nothing alarm -->
+    <string name="shake_title">Встряхнуть</string>
+    <string name="shake_summary">При встряхивании телефона
+        <xliff:g id="action">%s</xliff:g></string>
+    <string name="shake_dialog">Встряхнуть, что бы&#8230;</string>
+    <string name="math_title">Математические задачки</string>
+    <string name="math_summary">Для отключения будильника необходимо решить пример</string>
+    <string name="math_dialog">Вы проснулись?</string>
+    <string name="increasing_volume_title">Нарастающая громкость</string>
+    <string name="increasing_volume_summary">Используйте опцию ниже для установки максимальной громкости</string>
 </resources>
