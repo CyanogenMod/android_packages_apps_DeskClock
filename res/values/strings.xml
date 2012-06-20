@@ -327,7 +327,14 @@
 
     <!-- Label on the main screen control used to set alarm when there is already an existing alarm [CHAR LIMIT=30]-->
     <string name="control_set_alarm_with_existing">Alarm set: <xliff:g id="time">%s</xliff:g></string>
-
+	
+	
+    <!-- Stopwatch label -->
+    <string name="stopwatch_activity">Stopwatch</string>
+    <string name="stopwatch_pause">Pause</string>
+    <string name="stopwatch_start">Start</string>
+    <string name="stopwatch_lap">Lap</string>
+    <string name="stopwatch_reset">Reset</string>
 </resources>
 
 

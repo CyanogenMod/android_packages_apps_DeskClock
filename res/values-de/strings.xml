@@ -127,4 +127,11 @@
     <string name="loading_ringtone" msgid="6523322777415268044">"Klingelton wird geladen..."</string>
     <string name="control_set_alarm" msgid="2194676418924016327">"Wecker einstellen"</string>
     <string name="control_set_alarm_with_existing" msgid="1128169496817859490">"Wecker eingestellt: <xliff:g id="TIME">%s</xliff:g>"</string>
+	
+	<!-- Stopwatch label -->
+    <string name="stopwatch_activity">Stoppuhr</string>
+    <string name="stopwatch_pause">Pause</string>
+    <string name="stopwatch_start">Start</string>
+    <string name="stopwatch_lap">Rundenzeit</string>
+    <string name="stopwatch_reset">Reset</string>
 </resources>

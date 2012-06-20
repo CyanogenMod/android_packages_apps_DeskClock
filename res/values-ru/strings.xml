@@ -144,4 +144,11 @@
       <item>Отложить будильник</item>
       <item>Выключить будильник</item>
     </string-array>
+	
+	<!-- Stopwatch label -->
+    <string name="stopwatch_activity">Секундомер</string>
+    <string name="stopwatch_pause">Пауза</string>
+    <string name="stopwatch_start">Старт</string>
+    <string name="stopwatch_lap">Круг</string>
+    <string name="stopwatch_reset">Сбросить</string>
 </resources>
