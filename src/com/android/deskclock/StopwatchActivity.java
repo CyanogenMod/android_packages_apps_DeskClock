@@ -3,6 +3,7 @@ package com.android.deskclock;
 import java.util.Vector;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,21 +21,22 @@ public class StopwatchActivity extends Activity {
 
 	private static final int MSG_START_TIMER = 0;
 	private static final int MSG_CLEAR_TIMER = 1;
-	private static final int MSG_UPDATE_TIMER = 2;
 	private static final int MSG_PAUSE_TIMER = 3;
-	private static final int MSG_HIDE_TIMER = 4;
+	private static final int MSG_UPDATE_TIMER = 2;
 
-	private static final int REFRESH_RATE = 1;
+	private static final int REFRESH_RATE = 3;
 
-	private Vector<String> line1 = new Vector<String>();
-	private Vector<String> line2 = new Vector<String>();
-	private StopWatch timer = new StopWatch();
-	private boolean running = false;
+	private Vector<String> mPrimaryLine = new Vector<String>();
+	private Vector<String> mSecondaryLine = new Vector<String>();
+	private boolean mRunning, mSaveDate = false;
 	private TextView time1, time2;
+	private Button start, reset;
 	private ListView mListView;
-	private long mTimeLong = 0;
 	private Activity mContext;
-	private long mTime = 0;
+
+	private long mTime, mTimeLong = 0;
+	private static long mStartTime = 0;
+	private static long mPauseTime = 0;
 
 	Handler mHandler = new Handler() {
 		@Override
@@ -42,13 +44,13 @@ public class StopwatchActivity extends Activity {
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case MSG_START_TIMER:
-				timer.start();
-				running = true;
+				StartStopwatch();
+				mRunning = true;
 				mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);
 				break;
 
 			case MSG_UPDATE_TIMER:
-				mTime = timer.getElapsedTime();
+				mTime = TimeStopwatch();
 				time1.setText(getTimeStr(mTime));
 				time2.setText(" " + addZeroLong(mTime));
 				mHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIMER, REFRESH_RATE);
@@ -58,17 +60,13 @@ public class StopwatchActivity extends Activity {
 				mHandler.removeMessages(MSG_UPDATE_TIMER);
 				time1.setText("00:00:00");
 				time2.setText(" 000");
-				timer.clear();
+				ResetStopwatch();
 				break;
 
 			case MSG_PAUSE_TIMER:
 				mHandler.removeMessages(MSG_UPDATE_TIMER);
-				running = false;
-				timer.pause();
-				break;
-
-			case MSG_HIDE_TIMER:
-				mHandler.removeMessages(MSG_UPDATE_TIMER);
+				mRunning = false;
+				PauseStopwatch();
 				break;
 
 			default:
@@ -85,18 +83,11 @@ public class StopwatchActivity extends Activity {
 	}
 
 	private String addZero(long x) {
-		return x > 9 ? x + "" : "0" + x;
+		return String.format("%02d", x);
 	}
 
 	private String addZeroLong(long x) {
-		x = x % 1000;
-		if (x > 99)
-			return "" + x;
-		else if (x > 9)
-			return "0" + x;
-		else
-			return "00" + x;
-
+		return String.format("%03d", x % 1000);
 	}
 
 	private String getTimeStrAdapter(long x) {
@@ -109,130 +100,161 @@ public class StopwatchActivity extends Activity {
 		setContentView(R.layout.stopwatch);
 		mContext = this;
 
-		final Button start = (Button) findViewById(R.id.start);
-		final Button clear = (Button) findViewById(R.id.clear);
+		start = (Button) findViewById(R.id.start);
+		reset = (Button) findViewById(R.id.clear);
 		mListView = (ListView) findViewById(R.id.list);
 		time1 = (TextView) findViewById(R.id.time1);
 		time2 = (TextView) findViewById(R.id.time2);
 		time1.setText("00:00:00");
 		time2.setText(" 000");
-		start.setText(getString(R.string.stopwatch_start));
-		clear.setText(getString(R.string.stopwatch_reset));
+		loadSavedData();
+		if (mRunning)
+			setButtonsRunningText();
+		else
+			setButtonsPausedText();
 
 		time1.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!running) {
-					mHandler.sendEmptyMessage(MSG_START_TIMER);
-					start.setText(getString(R.string.stopwatch_pause));
-					clear.setText(getString(R.string.stopwatch_lap));
-				} else {
+				mSaveDate = true;
+				if (mRunning) {
+					setButtonsPausedText();
 					mHandler.sendEmptyMessage(MSG_PAUSE_TIMER);
-					start.setText(getString(R.string.stopwatch_start));
-					clear.setText(getString(R.string.stopwatch_reset));
+				} else {
+					setButtonsRunningText();
+					mHandler.sendEmptyMessage(MSG_START_TIMER);
 				}
 			}
 		});
 		start.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!running) {
-					mHandler.sendEmptyMessage(MSG_START_TIMER);
-					start.setText(getString(R.string.stopwatch_pause));
-					clear.setText(getString(R.string.stopwatch_lap));
-				} else {
+				mSaveDate = true;
+				if (mRunning) {
+					setButtonsPausedText();
 					mHandler.sendEmptyMessage(MSG_PAUSE_TIMER);
-					start.setText(getString(R.string.stopwatch_start));
-					clear.setText(getString(R.string.stopwatch_reset));
+				} else {
+					setButtonsRunningText();
+					mHandler.sendEmptyMessage(MSG_START_TIMER);
 				}
 			}
 		});
-		clear.setOnClickListener(new OnClickListener() {
+		reset.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!running) {
+				mSaveDate = true;
+				if (!mRunning) {
 					mHandler.sendEmptyMessage(MSG_CLEAR_TIMER);
-					line1 = new Vector<String>();
-					line2 = new Vector<String>();
-					mTimeLong = 0;
-					setAdapter(range = 0);
+					setAdapter(true);
 				} else {
 					mHandler.sendEmptyMessage(MSG_START_TIMER);
-					line1.add(new String(getTimeStrAdapter(mTime)));
-					line2.add(new String(getTimeStrAdapter(mTimeLong += mTime)));
-					setAdapter(range += 1);
+					mPrimaryLine.add(new String(getTimeStrAdapter(mTime)));
+					mSecondaryLine.add(new String(
+							getTimeStrAdapter(mTimeLong += mTime)));
+					setAdapter(false);
 				}
 			}
 		});
-
 	}
 
-	private int range = 0;
+	private void setButtonsRunningText() {
+		start.setText(getString(R.string.stopwatch_pause));
+		reset.setText(getString(R.string.stopwatch_lap));
+	}
 
-	private void setAdapter(int x) {
-		if (x > 0) {
+	private void setButtonsPausedText() {
+		start.setText(getString(R.string.stopwatch_start));
+		reset.setText(getString(R.string.stopwatch_reset));
+	}
+
+	private void setAdapter(boolean reset) {
+		if (!reset) {
 			String a[] = {};
 			String b[] = {};
-			mListView.setAdapter(new StopwatchAdapter(mContext, line1
-					.toArray(a), line2.toArray(b)));
+			mListView.setAdapter(new StopwatchAdapter(mContext, mPrimaryLine
+					.toArray(a), mSecondaryLine.toArray(b)));
 		} else {
+			mPrimaryLine = new Vector<String>();
+			mSecondaryLine = new Vector<String>();
+			mTimeLong = 0;
 			mListView.setAdapter(null);
 		}
 	}
 
-	protected void onResume() {
-		super.onResume();
-		long start = Long.parseLong(getSharedPreferences("mStartTime", MODE_PRIVATE).getString(
-				"mStartTime", "-1"));
-		if (start!=-1){
-			running = true;
-			StopWatch.init(start);
-			mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);			
-		}
-	}
-
+	@Override
 	protected void onPause() {
 		super.onPause();
-		if (running) {
-			mHandler.sendEmptyMessage(MSG_HIDE_TIMER);
-			getSharedPreferences("mStartTime", MODE_PRIVATE).edit()
-					.putString("mStartTime", StopWatch.getStartTime()).commit();
-		} else {
-			getSharedPreferences("mStartTime", MODE_PRIVATE).edit()
-					.putString("mStartTime", "-1").commit();
+		if (mSaveDate) {
+			String a[] = {};
+			a = mPrimaryLine.toArray(a);
+			String b[] = {};
+			b = mSecondaryLine.toArray(b);
+			SharedPreferences mSavedData = getSharedPreferences(
+					"mStopwatchData", MODE_PRIVATE);
+			mSavedData.edit().clear();
+			mSavedData.edit().putLong("mStartTime", mStartTime).apply();
+			mSavedData.edit().putLong("mPauseTime", mPauseTime).apply();
+			mSavedData.edit().putInt("mLapLength", a.length).apply();
+			for (int i = 0; i < a.length; i++) {
+				mSavedData.edit().putString("mPLine=" + i, a[i]).apply();
+				mSavedData.edit().putString("mSLine=" + i, b[i]).apply();
+			}
 		}
 	}
 
-	public static class StopWatch {
-		private static long startTime = 0;
-		private long pauseTime = 0;
-
-		public void start() {
-			StopWatch.startTime = System.currentTimeMillis()
-					- (this.pauseTime == -1 ? 0 : this.pauseTime);
-			this.pauseTime = 0;
+	private void loadSavedData() {
+		SharedPreferences mSavedData = getSharedPreferences("mStopwatchData",
+				MODE_PRIVATE);
+		if (mSavedData != null) {
+			mStartTime = mSavedData.getLong("mStartTime", 0);
+			mPauseTime = mSavedData.getLong("mPauseTime", 0);
+			int length = mSavedData.getInt("mLapLength", 0);
+			for (int i = 0; i < length; i++) {
+				mPrimaryLine.add(new String(mSavedData.getString("mPLine=" + i,
+						"Error data loading...")));
+				mSecondaryLine.add(new String(mSavedData.getString("mSLine="
+						+ i, "Error data loading...")));
+			}
+			if (length > 0)
+				setAdapter(false);
+			if (mStartTime != 0 && mPauseTime == 0) {
+				mRunning = true;
+				mSaveDate = true;
+				mHandler.sendEmptyMessage(MSG_UPDATE_TIMER);
+			} else {
+				if (mPauseTime == -1) {
+					time1.setText("00:00:00");
+					time2.setText(" 000");
+				} else {
+					mStartTime = System.currentTimeMillis()
+							- (mPauseTime == -1 ? 0 : mPauseTime);
+					time1.setText(getTimeStr(TimeStopwatch()));
+					time2.setText(" " + addZeroLong(TimeStopwatch()));
+				}
+			}
 		}
 
-		public void pause() {
-			if (this.pauseTime == 0)
-				this.pauseTime = System.currentTimeMillis() - startTime;
-		}
+	}
 
-		public static void init(long time) {
-			startTime = time;
-		}
+	public void StartStopwatch() {
+		mStartTime = System.currentTimeMillis()
+				- (mPauseTime == -1 ? 0 : mPauseTime);
+		mPauseTime = 0;
+	}
 
-		static public String getStartTime() {
-			return "" + startTime;
+	public void PauseStopwatch() {
+		if (mPauseTime == 0) {
+			mPauseTime = TimeStopwatch();
+			mStartTime = 0;
 		}
+	}
 
-		public void clear() {
-			this.pauseTime = -1;
-		}
+	public void ResetStopwatch() {
+		mPauseTime = -1;
+	}
 
-		public long getElapsedTime() {
-			return System.currentTimeMillis() - startTime;
-		}
+	public long TimeStopwatch() {
+		return System.currentTimeMillis() - mStartTime;
 	}
 
 	public class StopwatchAdapter extends ArrayAdapter<String> {
