@@ -329,7 +329,7 @@
     <string name="control_set_alarm_with_existing">Alarm set: <xliff:g id="time">%s</xliff:g></string>
 
     <!-- Shake to snooze/dismiss/nothing alarm -->
-    
+    <string name="shake_title">Shake</string>
     <string name="shake_summary">Shake to
         <xliff:g id="action">%s</xliff:g></string>
     <string name="shake_dialog">Shake device to&#8230;</string>
