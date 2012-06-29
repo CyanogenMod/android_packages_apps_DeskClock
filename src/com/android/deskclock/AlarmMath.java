@@ -136,7 +136,7 @@ public class AlarmMath extends Activity {
 				updateText();
 			}
 		});
-		button.setText("9");
+		button.setText("0");
 		button = (Button) findViewById(R.id.math_reset);
 		button.setOnClickListener(new OnClickListener() {
 			@Override
