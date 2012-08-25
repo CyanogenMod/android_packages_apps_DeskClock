@@ -15,9 +15,38 @@
 -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_item_dock_settings"
-        android:title="@string/menu_item_dock_settings"
-        android:icon="@android:drawable/ic_menu_preferences"/>
+    <!-- DeskClock -->
+    <group android:id="@+id/menu_group_deskclock">
+        <item android:id="@+id/menu_item_dock_settings"
+            android:title="@string/menu_item_dock_settings"
+            android:icon="@android:drawable/ic_menu_preferences"/>
+    </group>
+
+    <!-- StopWatch -->
+    <group android:id="@+id/menu_group_stopwatch">
+        <item android:id="@+id/menu_item_stopwatch_hide_last_lap"
+            android:title="@string/stopwatch_menu_hide_last_lap_panel"
+            android:checkable="true"
+            android:checked="false" />
+        <item android:id="@+id/menu_item_stopwatch_hide_best_lap"
+            android:title="@string/stopwatch_menu_hide_best_lap_panel"
+            android:checkable="true"
+            android:checked="false" />
+        <item android:id="@+id/menu_item_stopwatch_hide_laps"
+            android:title="@string/stopwatch_menu_hide_laps_panel"
+            android:checkable="true"
+            android:checked="false" />
+        <item android:id="@+id/menu_item_stopwatch_settings"
+            android:title="@string/stopwatch_menu_settings"/>
+    </group>
+
+    <!-- CountDown -->
+    <group android:id="@+id/menu_group_countdown">
+       <item android:id="@+id/menu_item_countdown_editor"
+          android:title="@string/countdown_menu_open_timer_editor"/>
+       <item android:id="@+id/menu_item_countdown_settings"
+          android:title="@string/countdown_menu_settings"/>
+    </group>
 </menu>
 
 

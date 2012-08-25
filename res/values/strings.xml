@@ -4,9 +4,9 @@
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
-  
+
           http://www.apache.org/licenses/LICENSE-2.0
-  
+
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -343,6 +343,221 @@
     <!-- Summary of alarm profile: Change profile to -->
     <string name="alarm_profile_summary_change_to">When alarm triggers, the profile will be changed to
         <xliff:g id="profile">%s</xliff:g></string>
+
+
+<!-- =============== CyanogenMod Entries =============== -->
+
+    <!-- TimerClockService is not ready -->
+    <string name="msg_timer_service_is_not_ready">\nThe timer service is not ready. No operation is allowed.\n</string>
+    <!-- Fails to create a new timer -->
+    <string name="msg_timer_creation_fails">\nTimer creation fails. No operation is allowed.\n</string>
+    <!-- Ui thread fails  -->
+    <string name="msg_timer_ui_thread_fails">\nDrawing UI thread fails. No operation is allowed.\n</string>
+    <!-- Preferences update fails  -->
+    <string name="msg_pref_update_fails">\nPreference update fails. Value was not changed.\n</string>
+    <!-- The operation fails -->
+    <string name="msg_operation_fails">\nThe operation fails.\n</string>
+
+    <!-- Title of the StopWatch fragment -->
+    <string name="stopwatch_title">Stopwatch</string>
+    <!-- StopWatch. Stop timer button text -->
+    <string name="stopwatch_actions_stop">Stop</string>
+    <!-- StopWatch. Stop timer button content description -->
+    <string name="stopwatch_actions_stop_cd">Stop the current stopwatch timer</string>
+    <!-- StopWatch. Start timer button text -->
+    <string name="stopwatch_actions_start">Start</string>
+    <!-- StopWatch. Start timer button content description -->
+    <string name="stopwatch_actions_start_cd">Start the current stopwatch timer</string>
+    <!-- StopWatch. Resume timer button text -->
+    <string name="stopwatch_actions_resume">Resume</string>
+    <!-- StopWatch. Resume timer button content description -->
+    <string name="stopwatch_actions_resume_cd">Resume the current stopwatch timer</string>
+    <!-- StopWatch. Reset timer button text -->
+    <string name="stopwatch_actions_reset">Reset</string>
+    <!-- StopWatch. Reset timer button content description -->
+    <string name="stopwatch_actions_reset_cd">Reset the current stopwatch timer</string>
+    <!-- StopWatch. Take lap time button text -->
+    <string name="stopwatch_actions_lap">Lap</string>
+    <!-- StopWatch. Take lap time button content description -->
+    <string name="stopwatch_actions_lap_cd">Take a snapshot of the lap time</string>
+    <!-- StopWatch. Take lap sector time button text -->
+    <string name="stopwatch_actions_sector">Sector</string>
+    <!-- StopWatch. Take lap sector time button content description -->
+    <string name="stopwatch_actions_sector_cd">Take a snapshot of a partial time of sector of the current lap</string>
+
+    <!-- StopWatch. Info Panel. Best lap title -->
+    <string name="stopwatch_info_panel_last_lap_title">Last lap</string>
+    <!-- StopWatch. Info Panel. Best lap title -->
+    <string name="stopwatch_info_panel_best_lap_title">Best lap</string>
+    <!-- StopWatch. Info Panel. Laps title -->
+    <string name="stopwatch_info_panel_laps_title">Laps</string>
+    <!-- StopWatch. Info Panel. No data -->
+    <string name="stopwatch_info_panel_empty_data">No data collected</string>
+
+    <!-- StopWatch. Info Panel. An empty lap label -->
+    <string name="stopwatch_info_panel_empty_lap">Lap</string>
+    <!-- StopWatch. Info Panel. Lap label -->
+    <string name="stopwatch_info_panel_lap_label">Lap <xliff:g id="lap">%1$s</xliff:g></string>
+    <!-- StopWatch. Info Panel. Sector label -->
+    <string name="stopwatch_info_panel_lap_sector">Sector <xliff:g id="sector">%1$s</xliff:g></string>
+
+    <!-- StopWatch. Menu. Hide last lap -->
+    <string name="stopwatch_menu_hide_last_lap_panel">Hide \'Last lap\'</string>
+    <!-- StopWatch. Menu. Hide best lap -->
+    <string name="stopwatch_menu_hide_best_lap_panel">Hide \'Best lap\'</string>
+    <!-- StopWatch. Menu. Hide best lap -->
+    <string name="stopwatch_menu_hide_laps_panel">Hide \'Laps\'</string>
+    <!-- StopWatch. Menu. Settings -->
+    <string name="stopwatch_menu_settings">Settings</string>
+
+    <!-- StopWatch. Preferences. General -->
+    <string name="stopwatch_preferences_lap_sectors">Lap/sectors</string>
+    <!-- StopWatch. Preferences. Summary of General catergory -->
+    <string name="stopwatch_preferences_lap_sectors_summary">Settings to configure the behaviour of laps and sectors.</string>
+    <!-- StopWatch. Preferences. Sectors -->
+    <string name="stopwatch_preferences_sectors">Sectors</string>
+    <!-- StopWatch. Preferences. Summary of sectors -->
+    <string name="stopwatch_preferences_sectors_summary">{0,choice,0#Lap sectors not enabled.|1#Lap sectors configured with 1 sector.|1&lt;Lap sectors configured with {0} sectors.}</string>
+    <!-- StopWatch. Preferences. Best lap behaviour -->
+    <string name="stopwatch_preferences_best_lap_behaviour">Best lap behaviour</string>
+    <!-- StopWatch. Preferences. About -->
+    <string name="stopwatch_preferences_about">About</string>
+    <!-- StopWatch. Preferences. Summary of About catergory -->
+    <string name="stopwatch_preferences_about_summary">Stopwatch. CyanogenMod © 2012</string>
+
+    <!-- StopWatch. Best lap behaviour. Lower times are better -->
+    <string name="stopwatch_best_lap_lower_pref">Lower times are better</string>
+    <!-- StopWatch. Best lap behaviour. Summary of lower times are better  -->
+    <string name="stopwatch_best_lap_lower_pref_summary">Best lap is the lower time.</string>
+    <!-- StopWatch. Best lap behaviour. Highest times are better -->
+    <string name="stopwatch_best_lap_highest_pref">Greater times are better</string>
+    <!-- StopWatch. Best lap behaviour. Summary of highest times are better -->
+    <string name="stopwatch_best_lap_highest_pref_summary">Best lap is the highest time.</string>
+
+    <!-- StopWatch. Sectors Dialog Preference. Enabled check text -->
+    <string name="sectors_dialog_enabled_text">Enabled lap sectors:</string>
+
+
+    <!-- Title of the CountDown fragment -->
+    <string name="countdown_title">Countdown</string>
+    <!-- CountDown. Stop timer button text -->
+    <string name="countdown_actions_stop">Stop</string>
+    <!-- CountDown. Stop timer button content description -->
+    <string name="countdown_actions_stop_cd">Stop the current countdown timer</string>
+    <!-- CountDown. Start timer button text -->
+    <string name="countdown_actions_start">Start</string>
+    <!-- CountDown. Start timer button content description -->
+    <string name="countdown_actions_start_cd">Start the current countdown timer</string>
+    <!-- CountDown. Resume timer button text -->
+    <string name="countdown_actions_resume">Resume</string>
+    <!-- CountDown. Resume timer button content description -->
+    <string name="countdown_actions_resume_cd">Resume the current countdown timer</string>
+    <!-- CountDown. Reset timer button text -->
+    <string name="countdown_actions_reset">Reset</string>
+    <!-- CountDown. Reset timer button content description -->
+    <string name="countdown_actions_reset_cd">Reset the current countdown timer</string>
+    <!-- CountDown. Cancel edition timer button text -->
+    <string name="countdown_actions_cancel">Cancel</string>
+    <!-- CountDown. Cancel edition button content description -->
+    <string name="countdown_actions_cancel_cd">Cancel the edition mode of the current countdown timer</string>
+    <!-- CountDown. Set edition timer button text -->
+    <string name="countdown_actions_set">Set</string>
+    <!-- CountDown. Set edition button content description -->
+    <string name="countdown_actions_set_cd">Set the time of current countdown timer</string>
+
+    <!-- CountDown. Menu. Edit timer -->
+    <string name="countdown_menu_open_timer_editor">Open timer editor</string>
+    <!-- CountDown. Menu. Cancel timer -->
+    <string name="countdown_menu_close_timer_editor">Close timer editor</string>
+    <!-- CountDown. Menu. Settings -->
+    <string name="countdown_menu_settings">Settings</string>
+
+    <!-- CountDown. Saved CountDown Timers Panel. Title -->
+    <string name="countdown_panel_title">Saved countdown Timers</string>
+    <!-- CountDown. Saved CountDown Timers Panel. Add timer -->
+    <string name="countdown_panel_add_text">Add current timer</string>
+    <!-- CountDown. Saved CountDown Timers Panel. Add timer. Content description -->
+    <string name="countdown_panel_add_text_cd">Add the countdown timer to the list of saved timers.</string>
+    <!-- CountDown. Saved CountDown Timers Panel. Remove timer. Content description -->
+    <string name="countdown_panel_remove_cd">Remove the countdown timer from the list of saved timers.</string>
+    <!-- CountDown. Saved CountDown Timers. Add confirmation dialog. -->
+    <string name="countdown_dialog_add">A new timer will be created.\n\nContinue?\n</string>
+    <!-- CountDown. Saved CountDown Timers. Delete confirmation dialog. -->
+    <string name="countdown_dialog_delete">The timer \'<xliff:g id="timer">%1$s</xliff:g>\' will be deleted.\n\nAre you sure?\n</string>
+
+    <!-- CountDown. Preferences. Notifications -->
+    <string name="countdown_preferences_notifications">Notifications</string>
+    <!-- CountDown. Preferences. Summary of Notifications category -->
+    <string name="countdown_preferences_notifications_summary">Settings to configure the behaviour of countdown notifications.</string>
+    <!-- CountDown. Preferences. About -->
+    <string name="countdown_preferences_about">About</string>
+    <!-- CountDown. Preferences. Summary of About catergory -->
+    <string name="countdown_preferences_about_summary">Countdown. CyanogenMod © 2012</string>
+
+    <!-- CountDown. Preferences. On CountDown in progress category title -->
+    <string name="countdown_notification_oncountdown_category">On countdown</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Notifications title -->
+    <string name="countdown_notification_oncountdown_notifications_title">Notifications</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Notifications summary Off -->
+    <string name="countdown_notification_oncountdown_notifications_summary_on">Display notifications in status bar.</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Notifications summary On -->
+    <string name="countdown_notification_oncountdown_notifications_summary_off">Don\'t display notifications in status bar.</string>
+
+    <!-- CountDown. Preferences. On final CountDown category title -->
+    <string name="countdown_notification_onfinalcountdown_category">On final countdown</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Notifications title -->
+    <string name="countdown_notification_onfinalcountdown_notifications_title">Notifications</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Notifications summary Off -->
+    <string name="countdown_notification_onfinalcountdown_notifications_summary_on">Display notifications in status bar.</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Notifications summary On -->
+    <string name="countdown_notification_onfinalcountdown_notifications_summary_off">Don\'t display notifications in status bar.</string>
+
+    <!-- CountDown. Preferences. On CountDown in progress. Show clock screen title -->
+    <string name="countdown_notification_onfinalcountdown_open_clock_screen_title">Open clock screen</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Show clock screen summary On -->
+    <string name="countdown_notification_onfinalcountdown_open_clock_screen_summary_on">When countdown finishes, the countdown clock screen is opened (This option is ignored while on a call).</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Show clock screen summary On -->
+    <string name="countdown_notification_onfinalcountdown_open_clock_screen_summary_off">When countdown finishes, don\'t disrupt user activity opening the countdown clock screen.</string>
+
+    <!-- CountDown. Preferences. On CountDown in progress. Ringtone -->
+    <string name="countdown_notification_onfinalcountdown_ringtone_title">Ringtone</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Ringtone. Silent option -->
+    <string name="countdown_notification_onfinalcountdown_ringtone_silent">Silent</string>
+
+    <!-- CountDown. Preferences. On CountDown in progress. Vibrate title -->
+    <string name="countdown_notification_onfinalcountdown_vibrate_title">Vibrate</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Vibrate always option -->
+    <string name="countdown_notification_onfinalcountdown_vibrate_always">Always</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Vibrate only when silent option -->
+    <string name="countdown_notification_onfinalcountdown_vibrate_only_when_silent">Only when silent</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Vibrate never option -->
+    <string name="countdown_notification_onfinalcountdown_vibrate_never">Never</string>
+
+    <!-- CountDown. Preferences. On CountDown in progress. Vibrate on call title -->
+    <string name="countdown_notification_onfinalcountdown_vibrate_on_call_title">Vibrate on call</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Vibrate on call summary On -->
+    <string name="countdown_notification_onfinalcountdown_vibrate_on_call_summary_on">Allow vibrate while on a call.</string>
+    <!-- CountDown. Preferences. On CountDown in progress. Vibrate on call summary On -->
+    <string name="countdown_notification_onfinalcountdown_vibrate_on_call_summary_off">No vibrate while on a call.</string>
+
+    <!-- Timer Clock Service. CountDown notification title for countdown timer -->
+    <string name="service_countdown_notification_title">Countdown timer</string>
+    <!-- Timer Clock Service. CountDown notification text for countdown in progress -->
+    <string name="service_countdown_notification_msg_progress">There is a countdown timer in progress.</string>
+    <!-- Timer Clock Service. CountDown notification text for ended countdown -->
+    <string name="service_countdown_notification_msg_end">The timer has reached his final countdown.</string>
+    <!-- Timer Clock Service. CountDown notification summary  -->
+    <string name="service_countdown_notification_summary">Remaining time: <xliff:g id="time">%1$s</xliff:g></string>
+
+    <!-- The text showed to advise that other fragment exists in deskclock fragment -->
+    <string name="cling_deskclock_desc">Swipe to right to show stopwatch and countdown timers.</string>
+    <!-- The text showed to advise the use of lap/sectors -->
+    <string name="cling_stopwatch_desc">Configure lap and sectors behaviour at the settings menu.</string>
+    <!-- The text showed to advise how to edit the countdown clock, with a long press holding -->
+    <string name="cling_countdown_desc">To edit timer, press and hold over the clock.</string>
+
+    <!-- The overflow actionbar button -->
+    <string name="overflow_button_cd">More options</string>
 
 </resources>
 

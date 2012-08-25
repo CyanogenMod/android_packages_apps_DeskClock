@@ -65,4 +65,11 @@
         android:clickable="false"
         />
 
+    <include
+        layout="@layout/cling_deskclock"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:clickable="false" />
+
 </FrameLayout>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ** Copyright (C) 2012 The CyanogenMod Project
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ **
+ **      http://www.apache.org/licenses/LICENSE-2.0
+ **
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+-->
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:deskclock="http://schemas.android.com/apk/res/com.android.deskclock"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/holo_background"
+  android:cacheColorHint="#00000000">
+
+    <com.android.deskclock.FragmentTitle
+      android:id="@+id/fragment_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      deskclock:icon="@mipmap/ic_launcher_timer"
+      deskclock:title="@string/countdown_title" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="horizontal"
+      android:layout_below="@id/fragment_title">
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="top"
+        android:layout_margin="@dimen/timer_default_margin">
+
+        <com.android.deskclock.CountDownTimerClock
+          android:id="@+id/main_timer_clock"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:paddingTop="@dimen/main_timer_clock_padding"
+          deskclock:size="@dimen/main_timer_clock_text_size"
+          deskclock:color="@color/main_timer_clock"
+          deskclock:autoresize="true"
+          deskclock:editable="true" />
+
+        <LinearLayout
+            android:id="@+id/vg_timer_control_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_timer_clock"
+            android:layout_marginTop="@dimen/timer_margin"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <Button
+              android:id="@+id/bt_timer_reset"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:textSize="@dimen/main_button_text_size"
+              android:text="@string/countdown_actions_reset"
+              android:contentDescription="@string/countdown_actions_reset_cd" />
+
+            <Button
+              android:id="@+id/bt_timer_main"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:textSize="@dimen/main_button_text_size"
+              android:text="@string/countdown_actions_start"
+              android:contentDescription="@string/countdown_actions_start_cd" />
+
+         </LinearLayout>
+
+         <LinearLayout
+            android:id="@+id/vg_timer_edit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/main_timer_clock"
+            android:layout_marginTop="@dimen/timer_margin"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <Button
+              android:id="@+id/bt_timer_cancel"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:textSize="@dimen/main_button_text_size"
+              android:text="@string/countdown_actions_cancel"
+              android:contentDescription="@string/countdown_actions_cancel_cd" />
+
+            <Button
+              android:id="@+id/bt_timer_set"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:textSize="@dimen/main_button_text_size"
+              android:text="@string/countdown_actions_set"
+              android:contentDescription="@string/countdown_actions_set_cd" />
+
+         </LinearLayout>
+
+      </RelativeLayout>
+
+      <com.android.deskclock.SavedCountDownTimers
+        android:id="@+id/countdown_saved_timers_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/countdown_saved_timers_panel_margin"
+        android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <View android:id="@+id/window_tint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC000000"
+        android:visibility="invisible"
+        android:clickable="false"
+        />
+
+    <include
+        layout="@layout/cling_countdown"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:clickable="false" />
+
+</RelativeLayout>

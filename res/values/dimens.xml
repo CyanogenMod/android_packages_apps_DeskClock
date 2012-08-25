@@ -3,16 +3,16 @@
 /*
 ** Copyright 2011, The Android Open Source Project
 **
-** Licensed under the Apache License, Version 2.0 (the "License"); 
-** you may not use this file except in compliance with the License. 
-** You may obtain a copy of the License at 
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
 **
-**     http://www.apache.org/licenses/LICENSE-2.0 
+**     http://www.apache.org/licenses/LICENSE-2.0
 **
-** Unless required by applicable law or agreed to in writing, software 
-** distributed under the License is distributed on an "AS IS" BASIS, 
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-** See the License for the specific language governing permissions and 
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
 ** limitations under the License.
 */
 -->
@@ -32,4 +32,45 @@
     <dimen name="next_alarm_margin_top">-4dip</dimen>
     <dimen name="alarm_label_padding">8dip</dimen>
     <dimen name="alert_dialog_title_height">64dip</dimen>
+    <dimen name="viewpager_padding">8dip</dimen>
+
+    <!-- FragmentTitle layout dimensions -->
+    <dimen name="fragment_titlebar_default_height">48dip</dimen>
+    <dimen name="fragment_titlebar_horizontal_padding">8dip</dimen>
+    <dimen name="fragment_titlebar_icon_size">32dp</dimen>
+    <dimen name="fragment_titlebar_title_left_padding">5dip</dimen>
+    <dimen name="fragment_titlebar_title_text_size">20dp</dimen>
+
+    <!-- Timer Clock -->
+    <dimen name="main_timer_clock_text_size">38sp</dimen>
+    <dimen name="main_timer_clock_padding">8dip</dimen>
+    <dimen name="small_timer_clock_text_size">12sp</dimen>
+    <dimen name="main_button_text_size">16sp</dimen>
+    <dimen name="timer_margin">8dip</dimen>
+    <dimen name="small_timer_margin">-8dip</dimen>
+    <dimen name="timer_default_margin">16dip</dimen>
+
+    <!-- StopWatch Info Panel dimensions -->
+    <dimen name="stopwatch_info_panel_margin">16dip</dimen>
+    <dimen name="stopwatch_info_panel_title_text_size">12sp</dimen>
+    <dimen name="stopwatch_info_panel_category_separator">8dip</dimen>
+    <dimen name="stopwatch_info_panel_item_text_size">12sp</dimen>
+    <dimen name="stopwatch_info_panel_divider_margin">16sp</dimen>
+    <dimen name="stopwatch_info_panel_divider_size">1dip</dimen>
+
+    <!-- CountDown Saved Timers Panel dimensions -->
+    <dimen name="countdown_saved_timers_panel_margin">16dip</dimen>
+    <dimen name="countdown_timers_panel_title_text_size">12sp</dimen>
+    <dimen name="countdown_timers_panel_divider_size">1dip</dimen>
+
+    <!-- ListView general dimensions -->
+    <dimen name="listview_row_height">48dip</dimen>
+    <dimen name="listview_row_padding">5dip</dimen>
+    <dimen name="listview_row_image_padding">3dip</dimen>
+    <dimen name="listview_row_text_size">12sp</dimen>
+
+    <!-- Cling -->
+    <dimen name="cling_margin_h">5dip</dimen>
+    <dimen name="cling_margin_v">20dip</dimen>
+
 </resources>

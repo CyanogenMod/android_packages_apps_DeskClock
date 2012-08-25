@@ -27,4 +27,15 @@
     <color name="red">#ffee0000</color>
     <color name="grey">#ffaaaaaa</color>
     <color name="transparent">#00000000</color>
+    <color name="bg_bar">#ff43474c</color>
+    <color name="fg_bar">#ff32b1e0</color>
+
+    <color name="titlebar_separator">#ff33b5e5</color>
+    <color name="main_timer_clock">#ff0099cc</color>
+    <color name="main_timer_clock_alerted">#ff8e0000</color>
+    <color name="partial_timer_clock">#aaa</color>
+    <color name="positive_timer_clock">#ff36ed64</color>
+    <color name="negative_timer_clock">#ffec3737</color>
+
+    <color name="cling_text">#ff33b5e5</color>
 </resources>

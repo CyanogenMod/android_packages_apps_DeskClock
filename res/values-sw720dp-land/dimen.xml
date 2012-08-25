@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Timer Clock -->
+    <dimen name="main_timer_clock_text_size">120sp</dimen>
+    <dimen name="small_timer_clock_text_size">30sp</dimen>
+    <dimen name="main_button_text_size">28sp</dimen>
+
+    <!-- StopWatch Info Panel dimensions -->
+    <dimen name="stopwatch_info_panel_title_text_size">26sp</dimen>
+    <dimen name="stopwatch_info_panel_item_text_size">26sp</dimen>
+
+    <!-- CountDown Saved Timers Panel dimensions -->
+    <dimen name="countdown_timers_panel_title_text_size">26sp</dimen>
+
+    <!-- ListView general dimensions -->
+    <dimen name="listview_row_text_size">26sp</dimen>
+</resources>

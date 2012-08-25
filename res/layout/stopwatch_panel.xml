@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ** Copyright (C) 2012 The CyanogenMod Project
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ **
+ **      http://www.apache.org/licenses/LICENSE-2.0
+ **
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+-->
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+  <TextView
+    android:id="@+id/stopwatch_panel_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/stopwatch_info_panel_title_text_size"
+    android:textColor="@android:color/darker_gray"
+    android:textAllCaps="true" />
+  <TextView
+    android:id="@+id/stopwatch_panel_title_separator"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/stopwatch_info_panel_divider_size"
+    android:layout_below="@id/stopwatch_panel_title"
+    android:background="@android:color/darker_gray" />
+  <com.android.deskclock.StopWatchLapItems
+    android:id="@+id/stopwatch_panel_items"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/stopwatch_panel_title_separator" />
+  <TextView
+    android:id="@+id/stopwatch_panel_no_data"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/stopwatch_panel_title_separator"
+    android:text="@string/stopwatch_info_panel_empty_data"
+    android:textColor="@android:color/primary_text_dark"
+    android:textSize="@dimen/stopwatch_info_panel_item_text_size"
+    android:gravity="center_horizontal" />
+</RelativeLayout>

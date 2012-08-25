@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ ** Copyright (C) 2012 The CyanogenMod Project
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ **
+ **      http://www.apache.org/licenses/LICENSE-2.0
+ **
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+-->
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:deskclock="http://schemas.android.com/apk/res/com.android.deskclock"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/holo_background"
+  android:cacheColorHint="#00000000">
+
+  <com.android.deskclock.FragmentTitle
+    android:id="@+id/fragment_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    deskclock:icon="@mipmap/ic_launcher_timer"
+    deskclock:title="@string/stopwatch_title" />
+
+  <com.android.deskclock.StopWatchTimerClock
+    android:id="@+id/main_timer_clock"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/fragment_title"
+    android:layout_marginLeft="@dimen/timer_default_margin"
+    android:layout_marginRight="@dimen/timer_default_margin"
+    deskclock:size="@dimen/main_timer_clock_text_size"
+    deskclock:color="@color/main_timer_clock"
+    deskclock:autoresize="true" />
+
+  <LinearLayout
+    android:id="@+id/vg_small_clocks"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/main_timer_clock"
+    android:layout_marginLeft="@dimen/timer_default_margin"
+    android:layout_marginRight="@dimen/timer_default_margin"
+    android:layout_marginTop="@dimen/small_timer_margin"
+    android:paddingBottom="@dimen/timer_margin"
+    android:orientation="horizontal">
+
+    <com.android.deskclock.StopWatchTimerClock
+      android:id="@+id/diff_timer_clock"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="left|center_vertical"
+      deskclock:size="@dimen/small_timer_clock_text_size"
+      deskclock:show_sign="true"
+      deskclock:positive_color="@color/positive_timer_clock"
+      deskclock:negative_color="@color/negative_timer_clock" />
+
+    <com.android.deskclock.StopWatchTimerClock
+      android:id="@+id/partial_timer_clock"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:gravity="right|center_vertical"
+      deskclock:size="@dimen/small_timer_clock_text_size"
+      deskclock:color="@color/partial_timer_clock" />
+
+  </LinearLayout>
+
+  <LinearLayout
+    android:id="@+id/vg_buttons"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/vg_small_clocks"
+    android:layout_marginLeft="@dimen/timer_default_margin"
+    android:layout_marginRight="@dimen/timer_default_margin"
+    android:orientation="horizontal">
+
+    <Button
+      android:id="@+id/bt_timer_reset"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textSize="@dimen/main_button_text_size"
+      android:text="@string/stopwatch_actions_reset"
+      android:contentDescription="@string/stopwatch_actions_reset_cd" />
+
+    <Button
+      android:id="@+id/bt_timer_main"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textSize="@dimen/main_button_text_size"
+      android:text="@string/stopwatch_actions_start"
+      android:contentDescription="@string/stopwatch_actions_start_cd" />
+
+    <Button
+      android:id="@+id/bt_timer_partial"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:textSize="@dimen/main_button_text_size"
+      android:text="@string/stopwatch_actions_lap"
+      android:contentDescription="@string/stopwatch_actions_lap_cd" />
+  </LinearLayout>
+
+  <com.android.deskclock.StopWatchInfoPanel
+    android:id="@+id/stopwatch_info_panel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/vg_buttons"
+    android:layout_marginLeft="@dimen/timer_default_margin"
+    android:layout_marginRight="@dimen/timer_default_margin"
+    android:layout_marginTop="@dimen/stopwatch_info_panel_margin"
+    android:layout_marginBottom="@dimen/stopwatch_info_panel_margin" />
+
+  <View android:id="@+id/window_tint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CC000000"
+    android:visibility="invisible"
+    android:clickable="false"
+    />
+
+  <include
+    layout="@layout/cling_stopwatch"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="invisible"
+    android:clickable="false" />
+
+</RelativeLayout>

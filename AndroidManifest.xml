@@ -27,7 +27,6 @@
                 android:icon="@mipmap/ic_launcher_alarmclock"
                 android:launchMode="singleInstance"
                 android:configChanges="orientation|keyboardHidden|keyboard|navigation">
-                >
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,14 +51,13 @@
         <activity android:name="SettingsActivity"
                 android:label="@string/settings"
                 android:taskAffinity=""
-                android:excludeFromRecents="true"
-                >
+                android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-        <activity android:name="SetAlarm" 
+        <activity android:name="SetAlarm"
                 android:label="@string/set_alarm"
                 android:theme="@style/SetAlarmTheme"
                 android:configChanges="orientation|keyboardHidden|keyboard|navigation" />
@@ -71,7 +69,7 @@
                 android:taskAffinity=""
                 android:configChanges="orientation|keyboardHidden|keyboard|navigation"/>
 
-        <!-- This activity is basically the same as AlarmAlert 
+        <!-- This activity is basically the same as AlarmAlert
              but full-screen so that it can turn the display on. -->
         <activity android:name="AlarmAlertFullScreen"
                 android:excludeFromRecents="true"
@@ -123,7 +121,7 @@
         </receiver>
 
         <receiver android:name="com.android.alarmclock.AnalogAppWidgetProvider" android:label="@string/analog_gadget"
-        	android:icon="@mipmap/ic_widget_analog_clock">
+            android:icon="@mipmap/ic_widget_analog_clock">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -142,6 +140,36 @@
                 <category android:name="android.intent.category.DREAM" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.android.deskclock.preferences.StopWatchPreferences"
+            android:icon="@mipmap/ic_launcher_timer"
+            android:exported="false">
+            <intent-filter>
+               <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.android.deskclock.preferences.CountDownPreferences"
+            android:icon="@mipmap/ic_launcher_timer"
+            android:exported="false">
+            <intent-filter>
+               <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+        </activity>
+
+        <!-- A service for holding timers clocks -->
+        <service android:name="com.android.deskclock.TimerClockService"
+                android:exported="false"
+                android:label="TimerClockService" />
+
+        <!-- The provider for timers database -->
+        <provider
+                android:name="com.android.deskclock.TimersProvider"
+                android:authorities="com.android.deskclock.timers"
+                android:exported="false" />
+
     </application>
 </manifest>
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ ** Copyright (C) 2012 The CyanogenMod Project
+ **
+ ** Licensed under the Apache License, Version 2.0 (the "License");
+ ** you may not use this file except in compliance with the License.
+ ** You may obtain a copy of the License at
+ **
+ **      http://www.apache.org/licenses/LICENSE-2.0
+ **
+ ** Unless required by applicable law or agreed to in writing, software
+ ** distributed under the License is distributed on an "AS IS" BASIS,
+ ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ** See the License for the specific language governing permissions and
+ ** limitations under the License.
+-->
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:stopwatch="http://schemas.android.com/apk/res/com.android.stopwatch">
+
+  <!-- On CountDown in progress -->
+  <PreferenceCategory
+    android:key="oncountdown_category"
+    android:title="@string/countdown_notification_oncountdown_category">
+
+    <CheckBoxPreference
+      android:key="oncountdown_notification"
+      android:title="@string/countdown_notification_oncountdown_notifications_title"
+      android:summaryOn="@string/countdown_notification_oncountdown_notifications_summary_on"
+      android:summaryOff="@string/countdown_notification_oncountdown_notifications_summary_off"
+      android:persistent="true"
+      android:defaultValue="true" />
+  </PreferenceCategory>
+
+  <!-- On final CountDown in progress -->
+  <PreferenceCategory
+    android:key="onfinalcountdown_category"
+    android:title="@string/countdown_notification_onfinalcountdown_category">
+
+    <CheckBoxPreference
+      android:key="onfinalcountdown_notification"
+      android:title="@string/countdown_notification_onfinalcountdown_notifications_title"
+      android:summaryOn="@string/countdown_notification_onfinalcountdown_notifications_summary_on"
+      android:summaryOff="@string/countdown_notification_onfinalcountdown_notifications_summary_off"
+      android:persistent="true"
+      android:defaultValue="true" />
+
+    <CheckBoxPreference
+      android:key="onfinalcountdown_open_clock_screen"
+      android:title="@string/countdown_notification_onfinalcountdown_open_clock_screen_title"
+      android:summaryOn="@string/countdown_notification_onfinalcountdown_open_clock_screen_summary_on"
+      android:summaryOff="@string/countdown_notification_onfinalcountdown_open_clock_screen_summary_off"
+      android:persistent="true"
+      android:defaultValue="true" />
+
+    <android.preference.RingtonePreference
+      android:key="onfinalcountdown_ringtone"
+      android:title="@string/countdown_notification_onfinalcountdown_ringtone_title"
+      android:ringtoneType="alarm"
+      android:persistent="true"
+      android:showDefault="false"
+      android:showSilent="true" />
+
+    <ListPreference
+      android:key="onfinalcountdown_vibrate"
+      android:title="@string/countdown_notification_onfinalcountdown_vibrate_title"
+      android:entries="@array/countdown_vibrate_labels"
+      android:entryValues="@array/countdown_vibrate_values"
+      android:defaultValue="2"
+      android:persistent="true" />
+
+    <CheckBoxPreference
+      android:key="onfinalcountdown_vibrate_on_call"
+      android:title="@string/countdown_notification_onfinalcountdown_vibrate_on_call_title"
+      android:summaryOn="@string/countdown_notification_onfinalcountdown_vibrate_on_call_summary_on"
+      android:summaryOff="@string/countdown_notification_onfinalcountdown_vibrate_on_call_summary_off"
+      android:persistent="true"
+      android:defaultValue="false" />
+
+  </PreferenceCategory>
+
+</PreferenceScreen>
