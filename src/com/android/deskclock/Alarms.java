@@ -427,7 +427,7 @@ public class Alarms {
 
         am.set(AlarmManager.RTC_WAKEUP, atTimeInMillis, sender);
 
-        setStatusBarIcon(context, true);
+        setStatusBarIcon(context, Settings.System.getInt(context.getContentResolver(), Settings.System.STATUS_BAR_ALARM, 0) == 1);
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(atTimeInMillis);

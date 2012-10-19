@@ -42,6 +42,8 @@ public class SettingsActivity extends PreferenceActivity
 
     private static final String KEY_ALARM_IN_SILENT_MODE =
             "alarm_in_silent_mode";
+    private static final String KEY_HIDE_STATUS_BAR_ICON =
+            "hide_status_bar_icon";
     static final String KEY_ALARM_SNOOZE =
             "snooze_duration";
     static final String KEY_VOLUME_BEHAVIOR =
@@ -94,6 +96,23 @@ public class SettingsActivity extends PreferenceActivity
                     ringerModeStreamTypes);
 
             return true;
+        }
+        else if (KEY_HIDE_STATUS_BAR_ICON.equals(preference.getKey())) {
+            CheckBoxPreference pref = (CheckBoxPreference) preference;
+            int showIcon;
+            if(pref.isChecked()) {
+                showIcon = 0;
+            } else {
+                showIcon = 1;
+            }
+
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.STATUS_BAR_ALARM,
+                    showIcon);
+
+            // Check if any alarms are active. If yes and
+            // we allow showing the alarm icon, the icon will be shown.
+            Alarms.setNextAlert(getApplicationContext());
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -148,6 +167,13 @@ public class SettingsActivity extends PreferenceActivity
                         Settings.System.MODE_RINGER_STREAMS_AFFECTED, 0);
         alarmInSilentModePref.setChecked(
                 (silentModeStreams & ALARM_STREAM_TYPE_BIT) == 0);
+
+        final CheckBoxPreference hideStatusBarIconPref =
+                (CheckBoxPreference) findPreference(KEY_HIDE_STATUS_BAR_ICON);
+        final int showIcon =
+                Settings.System.getInt(getContentResolver(),
+                        Settings.System.STATUS_BAR_ALARM,  0);
+        hideStatusBarIconPref.setChecked(showIcon == 0);
 
         ListPreference listPref =
                 (ListPreference) findPreference(KEY_ALARM_SNOOZE);
