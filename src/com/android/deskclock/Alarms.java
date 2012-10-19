@@ -427,7 +427,9 @@ public class Alarms {
 
         am.set(AlarmManager.RTC_WAKEUP, atTimeInMillis, sender);
 
-        setStatusBarIcon(context, true);
+        boolean showIcon = !context.getSharedPreferences(AlarmClock.PREFERENCES, 0).
+                getBoolean(SettingsActivity.KEY_HIDE_STATUS_BAR_ICON, false);
+        setStatusBarIcon(context, showIcon);
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(atTimeInMillis);
