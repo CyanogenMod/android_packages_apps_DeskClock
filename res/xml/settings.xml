@@ -71,4 +71,10 @@
         android:persistent="false"
         android:showSilent="true" />
 
+    <CheckBoxPreference
+        android:key="show_status_bar_icon"
+        android:title="@string/show_status_bar_icon_title"
+        android:summary="@string/show_status_bar_icon_summary"
+        android:defaultValue="true"  />
+
 </PreferenceScreen>

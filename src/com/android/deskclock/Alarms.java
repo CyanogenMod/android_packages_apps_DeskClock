@@ -20,8 +20,8 @@ import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -427,7 +427,11 @@ public class Alarms {
 
         am.set(AlarmManager.RTC_WAKEUP, atTimeInMillis, sender);
 
-        setStatusBarIcon(context, true);
+        // Read the icon state preference before showing the icon, default to visible
+        final SharedPreferences prefs = context.getSharedPreferences(AlarmClock.PREFERENCES, 0);
+        boolean showIcon = prefs.getBoolean(SettingsActivity.KEY_SHOW_STATUS_BAR_ICON, true);
+
+        setStatusBarIcon(context, showIcon);
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(atTimeInMillis);
@@ -554,6 +558,12 @@ public class Alarms {
         return true;
     }
 
+    public static void updateStatusBarIcon(Context context, boolean enabled) {
+        if (!getNextAlarm(context).equals("")) {
+            setStatusBarIcon(context, enabled);
+        }
+    }
+
     /**
      * Tells the StatusBar whether the alarm is enabled or disabled
      */
@@ -625,6 +635,12 @@ public class Alarms {
         Settings.System.putString(context.getContentResolver(),
                                   Settings.System.NEXT_ALARM_FORMATTED,
                                   timeString);
+    }
+
+    static String getNextAlarm(final Context context) {
+        String nextAlarm = Settings.System.getString(context.getContentResolver(),
+                                  Settings.System.NEXT_ALARM_FORMATTED);
+        return nextAlarm != null ? nextAlarm : "";
     }
 
     /**
