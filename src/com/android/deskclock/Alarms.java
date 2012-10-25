@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Parcel;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.format.DateFormat;
 
@@ -382,9 +383,18 @@ public class Alarms {
      * otherwise loads all alarms, activates next alert.
      */
     public static void setNextAlert(final Context context) {
+        boolean hideStatusBarIcon = PreferenceManager.getDefaultSharedPreferences(context).
+                getBoolean(SettingsActivity.KEY_HIDE_STATUS_BAR_ICON, false);
+        setNextAlert(context, hideStatusBarIcon);
+    }
+
+    /**
+     * Called whenever the user changes hide status bar settings.
+     */
+    static void setNextAlert(final Context context, final boolean hideStatusBarIcon) {
         final Alarm alarm = calculateNextAlert(context);
         if (alarm != null) {
-            enableAlert(context, alarm, alarm.time);
+            enableAlert(context, alarm, alarm.time, hideStatusBarIcon);
         } else {
             disableAlert(context);
         }
@@ -398,7 +408,7 @@ public class Alarms {
      * @param atTimeInMillis milliseconds since epoch
      */
     private static void enableAlert(Context context, final Alarm alarm,
-            final long atTimeInMillis) {
+            final long atTimeInMillis, final boolean hideStatusBarIcon) {
         AlarmManager am = (AlarmManager)
                 context.getSystemService(Context.ALARM_SERVICE);
 
@@ -427,7 +437,7 @@ public class Alarms {
 
         am.set(AlarmManager.RTC_WAKEUP, atTimeInMillis, sender);
 
-        setStatusBarIcon(context, true);
+        setStatusBarIcon(context, !hideStatusBarIcon);
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(atTimeInMillis);
