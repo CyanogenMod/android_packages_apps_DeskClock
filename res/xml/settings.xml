@@ -23,6 +23,11 @@
         android:title="@string/alarm_in_silent_mode_title"
         android:summary="@string/alarm_in_silent_mode_summary" />
 
+    <CheckBoxPreference
+        android:key="hide_status_bar_icon"
+        android:title="@string/hide_status_bar_icon_title"
+        android:summary="@string/hide_status_bar_icon_summary" />
+
     <VolumePreference
         android:title="@string/alarm_volume_title"
         android:summary="@string/alarm_volume_summary"
