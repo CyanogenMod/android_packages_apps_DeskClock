@@ -162,6 +162,12 @@
     <!-- Setting summary for whether the alarm should play in silent mode. -->
     <string name="alarm_in_silent_mode_summary">Play alarm even when the device is in silent mode</string>
 
+    <!-- Setting title for showing/hiding the alarm status bar icon -->
+    <string name="show_status_bar_icon_title">Show icon</string>
+
+    <!-- Setting summary for showing/hiding the alarm statusbar icon -->
+    <string name="show_status_bar_icon_summary">Show an icon in the status bar when an alarm is set</string>
+
     <!-- Setting title for changing the snooze duration. -->
     <string name="snooze_duration_title">Snooze duration</string>
 
