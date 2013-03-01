@@ -22,6 +22,10 @@
                 android:authorities="com.android.deskclock"
                 android:exported="false" />
 
+        <provider android:name="com.android.deskclock.worldclock.db.DbCityProvider"
+                android:authorities="com.android.deskclock.worldclock.db"
+                android:exported="false" />
+
         <activity android:name="DeskClock"
                 android:label="@string/app_label"
                 android:theme="@style/DeskClock"

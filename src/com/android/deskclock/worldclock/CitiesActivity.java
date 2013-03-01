@@ -18,9 +18,12 @@ package com.android.deskclock.worldclock;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
@@ -36,14 +39,16 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.deskclock.Alarms;
 import com.android.deskclock.DeskClock;
 import com.android.deskclock.R;
 import com.android.deskclock.SettingsActivity;
 import com.android.deskclock.Utils;
+import com.android.deskclock.worldclock.db.DbCities;
+import com.android.deskclock.worldclock.db.DbCity;
 
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -52,7 +57,9 @@ import java.util.TimeZone;
 /**
  * Cities chooser for the world clock
  */
-public class CitiesActivity extends Activity implements OnCheckedChangeListener, View.OnClickListener {
+public class CitiesActivity extends Activity
+    implements OnCheckedChangeListener, View.OnClickListener,
+    View.OnLongClickListener, AddCityDialog.OnCitySelected {
 
     /** This must be false for production.  If true, turns on logging,
         test code, etc. */
@@ -79,6 +86,9 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         private Object [] mSectionHeaders;
         private Object [] mSectionPositions;
 
+        private final int mClockWhiteColor;
+        private final int mClockBlueColor;
+
         public CityAdapter(
                 Context context,  HashMap<String, CityObj> selectedList, LayoutInflater factory) {
             super();
@@ -88,6 +98,10 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
             mCalendar = Calendar.getInstance();
             mCalendar.setTimeInMillis(System.currentTimeMillis());
             set24HoursMode(context);
+
+            Resources res = context.getResources();
+            mClockWhiteColor = res.getColor(R.color.clock_white);
+            mClockBlueColor = res.getColor(R.color.clock_blue);
         }
 
         @Override
@@ -106,6 +120,17 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         @Override
         public long getItemId(int p) {
             return p;
+        }
+
+        public int getPosition(CityObj o) {
+            int cc = mAllTheCitiesList.length;
+            for (int i = 0; i < cc; i++) {
+                CityObj c = (CityObj)mAllTheCitiesList[i];
+                if (c.mCityId != null && o.mCityId.compareTo(c.mCityId) == 0) {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         @Override
@@ -132,7 +157,9 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
                     view = mInflater.inflate(R.layout.city_list_item, parent, false);
                 }
                 view.setOnClickListener(CitiesActivity.this);
+                view.setOnLongClickListener(CitiesActivity.this);
                 TextView name = (TextView)view.findViewById(R.id.city_name);
+                name.setTextColor(c.mUserDefined ? mClockBlueColor : mClockWhiteColor);
                 TextView tz = (TextView)view.findViewById(R.id.city_time);
                 CheckBox cb = (CheckBox)view.findViewById(R.id.city_onoff);
                 cb.setTag(c);
@@ -150,7 +177,7 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
             notifyDataSetChanged();
         }
 
-        private void loadCitiesDataBase(Context c) {
+        /*package*/ void loadCitiesDataBase(Context c) {
             CityObj[] tempList = Utils.loadCitiesDataBase(c);
             if (tempList == null) {
                 return;
@@ -209,7 +236,6 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         }
     }
 
-
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -254,6 +280,9 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_item_add:
+                showAddCityDialog();
+                return true;
             case R.id.menu_item_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
@@ -304,5 +333,69 @@ public class CitiesActivity extends Activity implements OnCheckedChangeListener,
         boolean checked = b.isChecked();
         onCheckedChanged(b, checked);
         b.setChecked(!checked);
+    }
+
+    private void showAddCityDialog() {
+        AddCityDialog dlg = new AddCityDialog(this, mFactory, this);
+        dlg.showDialog();
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        CompoundButton b = (CompoundButton)v.findViewById(R.id.city_onoff);
+        final CityObj c = (CityObj)b.getTag();
+        if (c != null && c.mUserDefined) {
+            deleteCity(c);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onCitySelected(String name, String tz) {
+        DbCity dbCity = new DbCity();
+        dbCity.name = name;
+        dbCity.tz = tz;
+        long id = DbCities.addCity(CitiesActivity.this, dbCity);
+        if (id < 0) {
+          // Something were wrong
+          Toast.makeText(
+                  CitiesActivity.this,
+                  R.string.cities_add_city_failed,
+                  Toast.LENGTH_SHORT);
+        } else {
+            mAdapter.loadCitiesDataBase(CitiesActivity.this);
+            mAdapter.notifyDataSetChanged();
+            CityObj o = new CityObj(name, tz, "UD" + id);
+            mCitiesList.setSelection(mAdapter.getPosition(o));
+        }
+    }
+
+    private void deleteCity(final CityObj c) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.cities_delete_city_title);
+        builder.setMessage(getString(R.string.cities_delete_city_msg, c.mCityName));
+        builder.setPositiveButton(getString(android.R.string.ok),
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    int id = Integer.parseInt(c.mCityId.substring(2));
+                    if (DbCities.deleteCity(CitiesActivity.this, id) > 0) {
+                        // Remove from the list and from the selection
+                        mUserSelectedCities.remove(c.mCityId);
+                        mAdapter.loadCitiesDataBase(CitiesActivity.this);
+                        mAdapter.notifyDataSetChanged();
+                    } else {
+                        // Something were wrong
+                        Toast.makeText(
+                                CitiesActivity.this,
+                                R.string.cities_delete_city_failed,
+                                Toast.LENGTH_SHORT);
+                    }
+                }
+            });
+        builder.setNegativeButton(getString(android.R.string.cancel), null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

@@ -358,6 +358,8 @@
     <string name="button_cities">Cities</string>
     <!-- Describes the purpose of the button which pops up a menu of setting choices -->
     <string name="button_menu">More options</string>
+    <!-- Menu item on cities to add a new user-defined city -->
+    <string name="menu_item_add">Add</string>
     <!-- Menu item on most screens to get to more settings -->
     <string name="menu_item_settings">Settings</string>
     <!-- Menu item on most screens to get to the help information -->
@@ -808,5 +810,15 @@
     <string name="widget_12_hours_format_m" translatable="false">:mm<font size="15">aa</font></string>
     <string name="widget_24_hours_format_h" translatable="false">kk</string>
     <string name="widget_24_hours_format_m" translatable="false">:mm</string>
+
+    <!-- User-defined cities -->
+    <string name="cities_add_city_title">Add city</string>
+    <string name="cities_add_city_city">City:</string>
+    <string name="cities_add_city_timezone">TimeZone:</string>
+    <string name="cities_add_loading">Loading\u2026</string>
+    <string name="cities_add_city_failed">The city could not be created.</string>
+    <string name="cities_delete_city_title">Delete city</string>
+    <string name="cities_delete_city_msg">Do you want to delete <xliff:g id="city">%s</xliff:g>?</string>
+    <string name="cities_delete_city_failed">The city could not be deleted.</string>
 </resources>
 
