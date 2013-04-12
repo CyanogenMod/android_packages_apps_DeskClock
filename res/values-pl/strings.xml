@@ -120,5 +120,6 @@
     <string name="flip_action_dialog_title">Akcja odwrócenia</string>
     <string name="flip_action_summary">Odwrócenie urządzenia spowoduje
         <xliff:g id="action">%s</xliff:g></string>
+    <string name="alarm_incvol">Narastąjaca głośność</string>
     <!-- **** CYANOGENMOD EDITS END **** -->
 </resources>
