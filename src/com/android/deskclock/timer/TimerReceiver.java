@@ -99,10 +99,12 @@ public class TimerReceiver extends BroadcastReceiver {
 
             t.mState = TimerObj.STATE_TIMESUP;
             t.writeToSharedPref(prefs);
-            // Play ringtone by using TimerRingService service with a default alarm.
+            // Play ringtone by using TimerRingService service with the selected
+            // alarm.
             Log.d(TAG, "playing ringtone");
             Intent si = new Intent();
             si.setClass(context, TimerRingService.class);
+            si.putExtra(TimerRingService.RINGTONE, t.getRingtone().toString());
             context.startService(si);
 
             // Update the in-use notification
@@ -355,7 +357,7 @@ public class TimerReceiver extends BroadcastReceiver {
             return null;
         }
 
-        long hundreds, seconds, minutes, hours;
+        long seconds, minutes, hours;
         seconds = timeLeft / 1000;
         minutes = seconds / 60;
         seconds = seconds - minutes * 60;

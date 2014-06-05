@@ -28,4 +28,9 @@
         <item>@string/alarm_type_playlist</item>
         <item>@string/alarm_type_random</item>
     </string-array>
+
+    <string-array name="timer_ringtone_picker_entries" translatable="false">
+        <item>@string/alarm_type_ringtone</item>
+        <item>@string/alarm_type_default</item>
+    </string-array>
 </resources>
