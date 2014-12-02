@@ -123,7 +123,7 @@
         <item>Baku</item>
         <item>Bangkok</item>
         <item>Beirut</item>
-        <item>Calcutta</item>
+        <item>Kolkata</item>
         <item>Damascus</item>
         <item>Dhaka</item>
         <item>Dubai</item>
@@ -347,6 +347,7 @@
         <item>Chatham</item>
         <item>Vladivostok</item>
         <item>Kamchatka</item>
+        <item>Chennai</item>
     </string-array>
 
     <string-array name="cities_tz" translatable="false">
@@ -675,12 +676,13 @@
         <item>Asia/Aden</item>
         <item>Asia/Dubai</item>
         <item>Asia/Tashkent</item>
-        <item>Asia/Calcutta</item>
+        <item>Asia/Kolkata</item>
         <item>Pacific/Fiji</item>
         <item>Pacific/Auckland</item>
         <item>Pacific/Chatham</item>
         <item>Asia/Vladivostok</item>
         <item>Asia/Kamchatka</item>
+        <item>Asia/Kolkata</item>
     </string-array>
 
     <string-array name="cities_id" translatable="false">
@@ -941,7 +943,7 @@
         <item>C255</item>
         <item>C256</item>
         <item>C257</item>
-        <item>C258</item>
+        <item>C0</item>
         <item>C259</item>
         <item>C260</item>
         <item>C261</item>
@@ -972,7 +974,7 @@
         <item>C286</item>
         <item>C287</item>
         <item>C288</item>
-        <item>C289</item>
+        <item>C0</item>
         <item>C290</item>
         <item>C291</item>
         <item>C292</item>
@@ -1015,5 +1017,6 @@
         <item>C329</item>
         <item>C330</item>
         <item>C331</item>
+        <item>C332</item>
     </string-array>
 </resources>

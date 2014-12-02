@@ -599,13 +599,6 @@ public class Utils {
             tempList.add(city);
         }
 
-        // Sort alphabetically
-        Collections.sort(tempList, new Comparator<CityObj> () {
-            @Override
-            public int compare(CityObj c1, CityObj c2) {
-                return collator.compare(c1.mCityName, c2.mCityName);
-            }
-        });
         return tempList.toArray(new CityObj[tempList.size()]);
     }
 
