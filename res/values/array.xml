@@ -191,6 +191,7 @@
         <item>Helsinki</item>
         <item>Isle of Man</item>
         <item>Istanbul</item>
+        <item>Kiev</item>
         <item>Lisbon</item>
         <item>London</item>
         <item>Luxembourg</item>
@@ -524,6 +525,7 @@
         <item>Europe/Helsinki</item>
         <item>Europe/Isle_of_Man</item>
         <item>Europe/Istanbul</item>
+        <item>Europe/Kiev</item>
         <item>Europe/Lisbon</item>
         <item>Europe/London</item>
         <item>Europe/Luxembourg</item>
@@ -1012,5 +1014,6 @@
         <item>C328</item>
         <item>C329</item>
         <item>C330</item>
+        <item>C331</item>
     </string-array>
 </resources>
