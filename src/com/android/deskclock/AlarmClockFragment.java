@@ -61,6 +61,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -1039,6 +1040,17 @@ public class AlarmClockFragment extends DeskClockFragment implements
             if (!Utils.isRingToneUriValid(mContext, alarm.alert)) {
                 alarm.alert = RingtoneManager.getActualDefaultRingtoneUri(context,
                         RingtoneManager.TYPE_ALARM);
+
+                if (!Utils.isRingToneUriValid(mContext, alarm.alert)) {
+                    System.out.println("RAJ - ring tone is not valid!: " + alarm.alert);
+                    Uri uri = Utils.getSystemDefaultAlarm(mContext);
+                    alarm.alert = uri;
+                    System.out.println("RAJ - resetting to default: " + Utils.isRingToneUriValid(mContext, alarm.alert));
+
+                    RingtoneManager.setActualDefaultRingtoneUri(
+                            getActivity(), RingtoneManager.TYPE_ALARM, uri);
+                }
+
                 asyncUpdateAlarm(alarm, false);
             }
             final ItemHolder itemHolder = (ItemHolder) tag;
@@ -1854,6 +1866,7 @@ public class AlarmClockFragment extends DeskClockFragment implements
     }
 
     private void asyncUpdateAlarm(final Alarm alarm, final boolean popToast) {
+        System.out.println("RAJ - asyncUpdateAlarm: " + Log.getStackTraceString(new Exception()));
         final Context context = AlarmClockFragment.this.getActivity().getApplicationContext();
         final AsyncTask<Void, Void, AlarmInstance> updateTask =
                 new AsyncTask<Void, Void, AlarmInstance>() {

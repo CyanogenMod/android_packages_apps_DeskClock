@@ -21,6 +21,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.app.AlarmManager;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.SystemProperties;
 import android.preference.PreferenceManager;
 import android.provider.DocumentsContract.Document;
 import android.provider.MediaStore;
@@ -79,6 +81,7 @@ import java.util.TimeZone;
 
 public class Utils {
     private final static String PARAM_LANGUAGE_CODE = "hl";
+    private final static String PROP_ALARM = "ro.config.alarm_alert";
 
     /**
      * Help URL query parameter key for the app version.
@@ -704,5 +707,37 @@ public class Utils {
         }
 
         return false;
+    }
+
+    public static Uri getSystemDefaultAlarm(Context c) {
+        String defaultAlarm = SystemProperties.get(PROP_ALARM, null);
+        System.out.println("RAJ - prop: " + defaultAlarm);
+        if (defaultAlarm == null) {
+            return Alarm.NO_RINGTONE_URI;
+        }
+
+        Cursor cursor = null;
+        try {
+             c.getContentResolver().query(
+                    MediaStore.Audio.Media.INTERNAL_CONTENT_URI,
+                    new String[] { MediaStore.Audio.Media._ID},
+                    MediaStore.Audio.Media.TITLE+ "=?",
+                    new String[] {defaultAlarm},
+                    null);
+            if (cursor != null && cursor.getCount() > 0) {
+                long id = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID));
+                System.out.println("RAJ found value!: " + id);
+                return ContentUris.withAppendedId(MediaStore.Audio.Media.INTERNAL_CONTENT_URI, id);
+            }
+        } catch (Exception e) {
+            LogUtils.e("Cannot find default alarm ringtone: " + e.toString());
+            System.out.println("RAJ Cannot find default alarm ringtone: " + e.toString());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return Alarm.NO_RINGTONE_URI;
     }
 }
