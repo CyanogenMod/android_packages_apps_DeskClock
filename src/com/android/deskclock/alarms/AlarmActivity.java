@@ -284,7 +284,7 @@ public class AlarmActivity extends AppCompatActivity
         Utils.setTimeFormat(this, digitalClock,
                 getResources().getDimensionPixelSize(R.dimen.main_ampm_font_size));
 
-        mCurrentHourColor = Utils.getCurrentHourColor();
+        mCurrentHourColor = Utils.getCurrentHourColor(this);
         getWindow().setBackgroundDrawable(new ColorDrawable(mCurrentHourColor));
 
         mAlarmButton.setOnTouchListener(this);

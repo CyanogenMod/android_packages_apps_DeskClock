@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2012-2015 The CyanogenMod Project
+     Copyright (C) 2012-2016 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -22,4 +22,32 @@
       <item>@string/action_summary_dismiss</item>
       <item>@string/action_summary_do_nothing</item>
     </string-array>
+
+    <array name="background_color_by_hour">
+        <item>@color/hour_00</item>
+        <item>@color/hour_01</item>
+        <item>@color/hour_02</item>
+        <item>@color/hour_03</item>
+        <item>@color/hour_04</item>
+        <item>@color/hour_05</item>
+        <item>@color/hour_06</item>
+        <item>@color/hour_07</item>
+        <item>@color/hour_08</item>
+        <item>@color/hour_09</item>
+        <item>@color/hour_10</item>
+        <item>@color/hour_11</item>
+        <item>@color/hour_12</item>
+        <item>@color/hour_13</item>
+        <item>@color/hour_14</item>
+        <item>@color/hour_15</item>
+        <item>@color/hour_16</item>
+        <item>@color/hour_17</item>
+        <item>@color/hour_18</item>
+        <item>@color/hour_19</item>
+        <item>@color/hour_20</item>
+        <item>@color/hour_21</item>
+        <item>@color/hour_22</item>
+        <item>@color/hour_23</item>
+    </array>
+
 </resources>
