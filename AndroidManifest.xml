@@ -21,6 +21,27 @@
 
     <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="21" ></uses-sdk>
 
+    <permission
+        android:name="cyanogenmod.alarmclock.permission.WRITE_ALARMS"
+        android:permissionGroup="android.permission-group.SYSTEM_CLOCK"
+        android:protectionLevel="system|signature"
+        android:label="@string/permlab_write_alarms"
+        android:description="@string/permdesc_write_alarms"/>
+
+    <permission
+        android:name="cyanogenmod.alarmclock.permission.MANAGE_ALARMS"
+        android:permissionGroup="android.permission-group.SYSTEM_CLOCK"
+        android:protectionLevel="normal"
+        android:label="@string/permlab_manage_alarms"
+        android:description="@string/permdesc_manage_alarms"/>
+
+    <permission
+        android:name="cyanogenmod.alarmclock.permission.READ_ALARMS"
+        android:permissionGroup="android.permission-group.SYSTEM_CLOCK"
+        android:protectionLevel="normal"
+        android:label="@string/permlab_read_alarms"
+        android:description="@string/permdesc_read_alarms"/>
+
     <application android:label="@string/app_label"
                  android:icon="@mipmap/ic_launcher_alarmclock"
                  android:requiredForAllUsers="true"
@@ -28,7 +49,9 @@
 
         <provider android:name=".provider.ClockProvider"
                 android:authorities="com.android.deskclock"
-                android:exported="false" />
+                android:readPermission="cyanogenmod.alarmclock.permission.READ_ALARMS"
+                android:writePermission="cyanogenmod.alarmclock.permission.WRITE_ALARMS"
+                android:exported="true" />
 
         <provider android:name="com.android.deskclock.worldclock.db.DbCityProvider"
                 android:authorities="com.android.deskclock.worldclock.db"
@@ -254,6 +277,15 @@
                 <action android:name="stop_stopwatch" />
                 <action android:name="reset_stopwatch" />
                 <action android:name="share_stopwatch" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.android.deskclock.AlarmModificationIntentService"
+                android:exported="true"
+                android:permission="cyanogenmod.alarmclock.permission.MANAGE_ALARMS"
+                android:description="@string/alarm_modification_service_desc">
+            <intent-filter>
+                <action android:name="cyanogenmod.alarmclock.SET_ALARM_ENABLED" />
             </intent-filter>
         </service>
     </application>
