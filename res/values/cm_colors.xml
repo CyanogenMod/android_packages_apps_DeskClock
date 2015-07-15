@@ -42,4 +42,7 @@
     <color name="hour_22">#2c273e</color>
     <color name="hour_23">#272430</color>
 
+    <!--- Color to modify the numpad color in timer -->
+    <color name="numpad_color">#ffffff</color>
+
 </resources>

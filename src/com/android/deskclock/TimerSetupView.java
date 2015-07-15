@@ -39,6 +39,7 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
     protected final Button mNumbers [] = new Button [10];
     protected int mInput [] = new int [mInputSize];
     protected int mInputPointer = -1;
+    protected int mNumpadColor;
     protected Button mLeft, mRight;
     protected ImageButton mStart;
     protected ImageButton mDelete;
@@ -95,6 +96,7 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
         mDelete.setOnClickListener(this);
         mDelete.setOnLongClickListener(this);
         mDivider = findViewById(R.id.divider);
+        mNumpadColor = getResources().getColor(R.color.numpad_color);
 
         mNumbers[1] = (Button)v1.findViewById(R.id.key_left);
         mNumbers[2] = (Button)v1.findViewById(R.id.key_middle);
@@ -118,7 +120,7 @@ public class TimerSetupView extends LinearLayout implements Button.OnClickListen
         for (int i = 0; i < 10; i++) {
             mNumbers[i].setOnClickListener(this);
             mNumbers[i].setText(String.format("%d", i));
-            mNumbers[i].setTextColor(Color.WHITE);
+            mNumbers[i].setTextColor(mNumpadColor);
             mNumbers[i].setTag(R.id.numbers_key, new Integer(i));
         }
         updateTime();
