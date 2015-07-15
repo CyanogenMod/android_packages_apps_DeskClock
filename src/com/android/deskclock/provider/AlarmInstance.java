@@ -30,6 +30,7 @@ import com.android.deskclock.LogUtils;
 import com.android.deskclock.R;
 import com.android.deskclock.SettingsActivity;
 import cyanogenmod.app.ProfileManager;
+import cyanogenmod.alarmclock.ClockContract;
 
 import java.util.Calendar;
 import java.util.LinkedList;

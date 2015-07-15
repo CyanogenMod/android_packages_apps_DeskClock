@@ -1532,15 +1532,6 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         }
     }
 
-    private static AlarmInstance setupAlarmInstance(Context context, Alarm alarm) {
-        ContentResolver cr = context.getContentResolver();
-        AlarmInstance newInstance = alarm.createInstanceAfter(Calendar.getInstance());
-        newInstance = AlarmInstance.addInstance(cr, newInstance);
-        // Register instance to state manager
-        AlarmStateManager.registerInstance(context, newInstance, true);
-        return newInstance;
-    }
-
     private void asyncDeleteAlarm(final Alarm alarm) {
         final Context context = AlarmClockFragment.this.getActivity().getApplicationContext();
         final AsyncTask<Void, Void, Void> deleteTask = new AsyncTask<Void, Void, Void>() {
@@ -1577,7 +1568,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
 
                     // Create and add instance to db
                     if (newAlarm.enabled) {
-                        return setupAlarmInstance(context, newAlarm);
+                        return Alarm.setupAlarmInstance(context, newAlarm);
                     }
                 }
                 return null;
@@ -1599,19 +1590,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
                 new AsyncTask<Void, Void, AlarmInstance>() {
             @Override
             protected AlarmInstance doInBackground(Void ... parameters) {
-                Events.sendAlarmEvent(R.string.action_update, R.string.label_deskclock);
-                ContentResolver cr = context.getContentResolver();
-
-                // Dismiss all old instances
-                AlarmStateManager.deleteAllInstances(context, alarm.id);
-
-                // Update alarm
-                Alarm.updateAlarm(cr, alarm);
-                if (alarm.enabled) {
-                    return setupAlarmInstance(context, alarm);
-                }
-
-                return null;
+                    return (alarm == null) ? null : alarm.processUpdate(context);
             }
 
             @Override

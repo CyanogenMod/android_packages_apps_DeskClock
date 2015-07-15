@@ -51,7 +51,9 @@
 
         <provider android:name=".provider.ClockProvider"
                 android:authorities="com.android.deskclock"
-                android:exported="false" />
+                android:readPermission="cyanogenmod.alarmclock.permission.READ_ALARMS"
+                android:writePermission="cyanogenmod.alarmclock.permission.WRITE_ALARMS"
+                android:exported="true" />
 
         <activity android:name="DeskClock"
                 android:label="@string/app_label"
@@ -362,6 +364,15 @@
                 <action android:name="stop_stopwatch" />
                 <action android:name="reset_stopwatch" />
                 <action android:name="share_stopwatch" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.android.deskclock.AlarmModificationIntentService"
+                android:exported="true"
+                android:permission="cyanogenmod.alarmclock.permission.MANAGE_ALARMS"
+                android:description="@string/alarm_modification_service_desc">
+            <intent-filter>
+                <action android:name="cyanogenmod.alarmclock.SET_ALARM_ENABLED" />
             </intent-filter>
         </service>
     </application>
