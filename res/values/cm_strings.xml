@@ -98,4 +98,7 @@
     <string name="menu_item_widget_settings">Widget settings</string>
     <string name="activity_not_found">Activity not found!</string>
 
+    <!-- Permissions for reading/writing DeskClock alarms provider -->
+    <string name="permlab_manage_alarms">Access and change your alarms</string>
+    <string name="permdesc_manage_alarms">Allows this application to add, modify and delete all of your alarm clock alarms.</string>
 </resources>

@@ -21,6 +21,13 @@
 
     <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="21" ></uses-sdk>
 
+    <permission
+        android:name="com.android.deskclock.permission.MANAGE_ALARMS"
+        android:permissionGroup="android.permission-group.SYSTEM_CLOCK"
+        android:protectionLevel="normal"
+        android:label="@string/permlab_manage_alarms"
+        android:description="@string/permdesc_manage_alarms"/>
+
     <application android:label="@string/app_label"
                  android:icon="@mipmap/ic_launcher_alarmclock"
                  android:requiredForAllUsers="true"
@@ -28,7 +35,9 @@
 
         <provider android:name=".provider.ClockProvider"
                 android:authorities="com.android.deskclock"
-                android:exported="false" />
+                android:readPermission="com.android.deskclock.permission.MANAGE_ALARMS"
+                android:writePermission="com.android.deskclock.permission.MANAGE_ALARMS"
+                android:exported="true" />
 
         <provider android:name="com.android.deskclock.worldclock.db.DbCityProvider"
                 android:authorities="com.android.deskclock.worldclock.db"
