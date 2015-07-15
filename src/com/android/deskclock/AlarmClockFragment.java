@@ -1768,15 +1768,6 @@ public class AlarmClockFragment extends DeskClockFragment implements
         AlarmUtils.showTimeEditDialog(this, null);
     }
 
-    private static AlarmInstance setupAlarmInstance(Context context, Alarm alarm) {
-        ContentResolver cr = context.getContentResolver();
-        AlarmInstance newInstance = alarm.createInstanceAfter(Calendar.getInstance());
-        newInstance = AlarmInstance.addInstance(cr, newInstance);
-        // Register instance to state manager
-        AlarmStateManager.registerInstance(context, newInstance, true);
-        return newInstance;
-    }
-
     private void asyncDeleteAlarm(final Alarm alarm) {
         final Context context = AlarmClockFragment.this.getActivity().getApplicationContext();
         final AsyncTask<Void, Void, Void> deleteTask = new AsyncTask<Void, Void, Void>() {
@@ -1818,7 +1809,7 @@ public class AlarmClockFragment extends DeskClockFragment implements
                                 sDeskClockExtensions.addAlarm(
                                         AlarmClockFragment.this.getActivity().getApplicationContext(),
                                         newAlarm);
-                                return setupAlarmInstance(context, newAlarm);
+                                return Alarm.setupAlarmInstance(context, newAlarm);
                             }
                         }
                         return null;
@@ -1840,30 +1831,11 @@ public class AlarmClockFragment extends DeskClockFragment implements
                 new AsyncTask<Void, Void, AlarmInstance>() {
                     @Override
                     protected AlarmInstance doInBackground(Void ... parameters) {
-                        ContentResolver cr = context.getContentResolver();
-
-                        // Dismiss all old instances
-                        AlarmStateManager.deleteAllInstances(context, alarm.id);
-                        // Register/Update the ringtone uri
-                        if (alarm.alert != null) {
-                            try {
-                                getActivity().getContentResolver().takePersistableUriPermission(
-                                        alarm.alert, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            } catch (SecurityException ex) {
-                                // Ignore
-                            }
+                        if (alarm != null) {
+                            return alarm.processUpdate(context);
+                        } else {
+                            return null;
                         }
-
-                        // Dismiss all old instances
-                        AlarmStateManager.deleteAllInstances(context, alarm.id);
-
-                        // Update alarm
-                        Alarm.updateAlarm(cr, alarm);
-                        if (alarm.enabled) {
-                            return setupAlarmInstance(context, alarm);
-                        }
-
-                        return null;
                     }
 
                     @Override
