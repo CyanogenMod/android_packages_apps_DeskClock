@@ -19,6 +19,7 @@
 
 package com.android.deskclock.provider;
 
+import cyanogenmod.alarmclock.ClockContract;
 import cyanogenmod.app.ProfileManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;

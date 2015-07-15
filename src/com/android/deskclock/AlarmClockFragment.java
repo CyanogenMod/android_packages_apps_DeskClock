@@ -1768,15 +1768,6 @@ public class AlarmClockFragment extends DeskClockFragment implements
         AlarmUtils.showTimeEditDialog(this, null);
     }
 
-    private static AlarmInstance setupAlarmInstance(Context context, Alarm alarm) {
-        ContentResolver cr = context.getContentResolver();
-        AlarmInstance newInstance = alarm.createInstanceAfter(Calendar.getInstance());
-        newInstance = AlarmInstance.addInstance(cr, newInstance);
-        // Register instance to state manager
-        AlarmStateManager.registerInstance(context, newInstance, true);
-        return newInstance;
-    }
-
     private void asyncDeleteAlarm(final Alarm alarm) {
         final Context context = AlarmClockFragment.this.getActivity().getApplicationContext();
         final AsyncTask<Void, Void, Void> deleteTask = new AsyncTask<Void, Void, Void>() {
@@ -1818,7 +1809,7 @@ public class AlarmClockFragment extends DeskClockFragment implements
                                 sDeskClockExtensions.addAlarm(
                                         AlarmClockFragment.this.getActivity().getApplicationContext(),
                                         newAlarm);
-                                return setupAlarmInstance(context, newAlarm);
+                                return Alarm.setupAlarmInstance(context, newAlarm);
                             }
                         }
                         return null;
@@ -1860,7 +1851,7 @@ public class AlarmClockFragment extends DeskClockFragment implements
                         // Update alarm
                         Alarm.updateAlarm(cr, alarm);
                         if (alarm.enabled) {
-                            return setupAlarmInstance(context, alarm);
+                            return Alarm.setupAlarmInstance(context, alarm);
                         }
 
                         return null;

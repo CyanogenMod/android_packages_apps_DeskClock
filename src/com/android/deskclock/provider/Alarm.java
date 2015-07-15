@@ -16,6 +16,8 @@
 
 package com.android.deskclock.provider;
 
+import com.android.deskclock.alarms.AlarmStateManager;
+import cyanogenmod.alarmclock.ClockContract;
 import cyanogenmod.app.ProfileManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -212,6 +214,67 @@ public final class Alarm implements Parcelable, ClockContract.AlarmsColumns {
         if (alarmId == INVALID_ID) return false;
         int deletedRows = contentResolver.delete(getUri(alarmId), "", null);
         return deletedRows == 1;
+    }
+
+    /**
+     * Set an existing alarm's enabled status, accounting for all required
+     * follow up actions after this occurs. These include:
+     *  - Delete all existing instances of this alarm
+     *  - Update the ringtone URI to be accessible if the alarm is enabled.
+     *  - Update the Alarms table to set the enabled flag.
+     *  - If enabling the alarm, schedule a new instance for it.
+     * @param context A Context to retrieve a ContentResolver.
+     * @param alarmId The ID of the alarm to change the enabled state of.
+     * @param enabled if true, set the alarm to enabled. Otherwise, disabled the alarm.
+     * @return true if the alarm enabled state change was successful.
+     */
+    public static boolean setAlarmEnabled(Context context, long alarmId, boolean enabled) {
+        ContentResolver contentResolver = context.getContentResolver();
+        Alarm alarm = getAlarm(contentResolver, alarmId);
+        // If this alarm does not exist, we can't update it's enabled status.
+        if (alarm == null) {
+            return false;
+        }
+        // Dismiss all old instances
+        AlarmStateManager.deleteAllInstances(context, alarm.id);
+        // Register/Update the ringtone uri
+        if (alarm.alert != null) {
+            try {
+                contentResolver.takePersistableUriPermission(
+                        alarm.alert, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } catch (SecurityException ex) {
+                // Ignore
+            }
+        }
+
+        // Dismiss all old instances
+        AlarmStateManager.deleteAllInstances(context, alarm.id);
+
+        // Set the new state
+        alarm.enabled = enabled;
+
+        // Update alarm
+        Alarm.updateAlarm(contentResolver, alarm);
+        if (alarm.enabled) {
+            AlarmInstance instance = setupAlarmInstance(context, alarm);
+            return instance != null;
+        }
+        return true;
+    }
+
+    /**
+     * Schedule the next instance of this alarm.
+     * @param context A Context to retrieve a ContentResolver.
+     * @param alarm The alarm to set enabled/disabled.
+     * @return The new AlarmInstance that was created.
+     */
+    public static AlarmInstance setupAlarmInstance(Context context, Alarm alarm) {
+        ContentResolver cr = context.getContentResolver();
+        AlarmInstance newInstance = alarm.createInstanceAfter(Calendar.getInstance());
+        newInstance = AlarmInstance.addInstance(cr, newInstance);
+        // Register instance to state manager
+        AlarmStateManager.registerInstance(context, newInstance, true);
+        return newInstance;
     }
 
     public static final Parcelable.Creator<Alarm> CREATOR = new Parcelable.Creator<Alarm>() {
