@@ -24,13 +24,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.Color;
@@ -41,8 +44,11 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.view.ViewCompat;
 import android.transition.AutoTransition;
 import android.transition.Fade;
@@ -78,6 +84,10 @@ import com.android.deskclock.widget.TextTime;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.UUID;
+
+import cyanogenmod.app.Profile;
+import cyanogenmod.app.ProfileManager;
 
 /**
  * AlarmClock application.
@@ -106,6 +116,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
 
     private static final int REQUEST_CODE_RINGTONE = 1;
     private static final int REQUEST_CODE_PERMISSIONS = 2;
+    private static final int REQUEST_CODE_PROFILE = 3;
     private static final long INVALID_ID = -1;
     private static final String PREF_KEY_DEFAULT_ALARM_RINGTONE_URI = "default_alarm_ringtone_uri";
 
@@ -125,6 +136,20 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
     private AlarmItemAdapter mAdapter;
     private View mEmptyView;
     private View mFooterView;
+
+    private ProfileManager mProfileManager;
+    private boolean mProfilesEnabled;
+    private BroadcastReceiver mProfileReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (ProfileManager.PROFILES_STATE_CHANGED_ACTION.equals(action)) {
+                boolean newState = intent.getBooleanExtra(
+                        ProfileManager.EXTRA_PROFILES_STATE, false);
+                updateProfilesStatus(newState);
+            }
+        }
+    };
 
     private Bundle mRingtoneTitleCache; // Key: ringtone uri, value: ringtone title
     private ActionableToastBar mUndoBar;
@@ -206,6 +231,9 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
             previousDayMap = savedState.getBundle(KEY_PREVIOUS_DAY_MAP);
             mSelectedAlarm = savedState.getParcelable(KEY_SELECTED_ALARM);
         }
+
+        // Register profiles status
+        mProfileManager = ProfileManager.getInstance(getActivity());
 
         mExpandInterpolator = new DecelerateInterpolator(EXPAND_DECELERATION);
         mCollapseInterpolator = new DecelerateInterpolator(COLLAPSE_DECELERATION);
@@ -326,6 +354,10 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         }
 
         setTimePickerListener();
+
+        updateProfilesStatus(mProfileManager.isProfilesEnabled());
+        getActivity().registerReceiver(mProfileReceiver, new IntentFilter(
+                ProfileManager.PROFILES_STATE_CHANGED_ACTION));
     }
 
     private void hideUndoBar(boolean animate, MotionEvent event) {
@@ -383,6 +415,8 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         // home was pressed, just dismiss any existing toast bar when restarting
         // the app.
         hideUndoBar(false, null);
+
+        getActivity().unregisterReceiver(mProfileReceiver);
     }
 
     private void showLabelDialog(final Alarm alarm) {
@@ -462,6 +496,14 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         startActivityForResult(intent, REQUEST_CODE_RINGTONE);
     }
 
+    private void launchProfilePicker(Alarm alarm) {
+        mSelectedAlarm = alarm;
+        final Intent intent = new Intent(ProfileManager.ACTION_PROFILE_PICKER);
+        intent.putExtra(ProfileManager.EXTRA_PROFILE_EXISTING_UUID, alarm.profile.toString());
+        intent.putExtra(ProfileManager.EXTRA_PROFILE_SHOW_NONE, true);
+        startActivityForResult(intent, REQUEST_CODE_PROFILE);
+    }
+
     private void saveRingtoneUri(Intent intent) {
         Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
         if (uri == null) {
@@ -506,12 +548,50 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         }
     }
 
+    private void saveProfile(Intent intent) {
+        final String uuid = intent.getStringExtra(ProfileManager.EXTRA_PROFILE_PICKED_UUID);
+        if (uuid != null) {
+            try {
+                mSelectedAlarm.profile = UUID.fromString(uuid);
+            } catch (IllegalArgumentException ex) {
+                mSelectedAlarm.profile = ProfileManager.NO_PROFILE;
+            }
+        } else {
+            mSelectedAlarm.profile = ProfileManager.NO_PROFILE;
+        }
+        asyncUpdateAlarm(mSelectedAlarm, false);
+    }
+
+    private String getProfileName(Alarm alarm) {
+        if (!mProfilesEnabled || alarm.profile.equals(ProfileManager.NO_PROFILE)) {
+            return getString(R.string.profile_no_selected);
+        }
+        Profile profile = mProfileManager.getProfile(alarm.profile);
+        if (profile == null) {
+            return getString(R.string.profile_no_selected);
+        }
+        return profile.getName();
+    }
+
+    private void updateProfilesStatus(boolean newState) {
+        if (mProfilesEnabled != newState) {
+            mProfilesEnabled = newState;
+            // Need to refresh the data
+            if (mAdapter != null) {
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_RINGTONE:
                     saveRingtoneUri(data);
+                    break;
+                case REQUEST_CODE_PROFILE:
+                    saveProfile(data);
                     break;
                 default:
                     LogUtils.w("Unhandled request code in onActivityResult: " + requestCode);
@@ -575,6 +655,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
             CheckBox vibrate;
             CheckBox increasingVolume;
             TextView ringtone;
+            TextView profile;
             View hairLine;
             View arrow;
             View collapseExpandArea;
@@ -716,6 +797,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
             holder.vibrate = (CheckBox) view.findViewById(R.id.vibrate_onoff);
             holder.increasingVolume = (CheckBox) view.findViewById(R.id.increasing_volume_onoff);
             holder.ringtone = (TextView) view.findViewById(R.id.choose_ringtone);
+            holder.profile = (TextView) view.findViewById(R.id.choose_profile);
 
             view.setTag(holder);
             return holder;
@@ -883,6 +965,8 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
                     }
                 }
             });
+
+            itemHolder.profile.setVisibility(isProfilesEnabled() ? View.VISIBLE : View.GONE);
         }
 
         private void setAlarmItemBackgroundAndElevation(LinearLayout layout, boolean expanded) {
@@ -1063,6 +1147,18 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
                     final boolean checked = ((CheckBox) v).isChecked();
                     alarm.increasingVolume = checked;
                     asyncUpdateAlarm(alarm, false);
+                }
+            });
+
+            final String profile = getProfileName(alarm);
+            itemHolder.profile.setText(profile);
+            itemHolder.profile.setVisibility(isProfilesEnabled() ? View.VISIBLE : View.GONE);
+            itemHolder.profile.setContentDescription(
+                    mContext.getResources().getString(R.string.profile_description, profile));
+            itemHolder.profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchProfilePicker(alarm);
                 }
             });
         }
