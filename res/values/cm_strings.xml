@@ -23,4 +23,11 @@
 
     <!-- Setting labels on Set alarm screen: Increasing volume on or off -->
     <string name="alarm_increasing_volume">Increasing volume</string>
+
+    <!-- Setting labels on Set alarm screen: Choose profile -->
+    <string name="profile_description">Profile <xliff:g id="profile">%s</xliff:g></string>
+
+    <!-- No profile selected label -->
+    <string name="profile_no_selected">No profile selected</string>
+
 </resources>

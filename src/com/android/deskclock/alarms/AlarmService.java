@@ -32,6 +32,9 @@ import com.android.deskclock.R;
 import com.android.deskclock.events.Events;
 import com.android.deskclock.provider.AlarmInstance;
 
+import cyanogenmod.app.Profile;
+import cyanogenmod.app.ProfileManager;
+
 /**
  * This service is in charge of starting/stopping the alarm. It will bring up and manage the
  * {@link AlarmActivity} as well as {@link AlarmKlaxon}.
@@ -135,6 +138,40 @@ public class AlarmService extends Service {
         }
     };
 
+    private void changeToProfile(final Context context, final AlarmInstance instance) {
+        final ProfileManager profileManager = ProfileManager.getInstance(this);
+        if (!profileManager.isProfilesEnabled()) {
+            LogUtils.v("Profiles are disabled");
+            return;
+        }
+
+        // The alarm is defined to change the active profile?
+        if (instance.mProfile.equals(ProfileManager.NO_PROFILE)) {
+            LogUtils.v("Alarm doesn't define a profile to change to");
+            return;
+        }
+
+        // Ensure that the profile still exists
+        Profile profile = profileManager.getProfile(instance.mProfile);
+        if (profile == null) {
+            LogUtils.e("The profile \"" + instance.mProfile
+                    + "\" does not exist. Can't change to this profile");
+            return;
+        }
+
+        // Is the current profile different?
+        Profile activeProfile = profileManager.getActiveProfile();
+        if (activeProfile == null || !profile.getUuid().equals(activeProfile.getUuid())) {
+            // Change to profile
+            LogUtils.i("Changing to profile \"" + profile.getName() + "\" (" + profile.getUuid()
+                    + ") requested by alarm \"" + instance.mLabel + "\" (" + instance.mId + ")");
+            profileManager.setActiveProfile(profile.getUuid());
+        } else {
+            LogUtils.v("The profile \"" + profile.getName() + "\" (" + profile.getUuid()
+                    + " is already active. No need to change to");
+        }
+    }
+
     private void startAlarm(AlarmInstance instance) {
         LogUtils.v("AlarmService.start with instance: " + instance.mId);
         if (mCurrentAlarm != null) {
@@ -153,6 +190,7 @@ public class AlarmService extends Service {
         mInitialCallState = mTelephonyManager.getCallState();
         mTelephonyManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
         AlarmKlaxon.start(this, mCurrentAlarm);
+        changeToProfile(this, mCurrentAlarm);
         sendBroadcast(new Intent(ALARM_ALERT_ACTION));
     }
 
