@@ -31,6 +31,7 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.Color;
@@ -41,8 +42,11 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v4.view.ViewCompat;
 import android.transition.AutoTransition;
 import android.transition.Fade;
@@ -78,6 +82,10 @@ import com.android.deskclock.widget.TextTime;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.UUID;
+
+import cyanogenmod.app.Profile;
+import cyanogenmod.app.ProfileManager;
 
 /**
  * AlarmClock application.
@@ -106,6 +114,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
 
     private static final int REQUEST_CODE_RINGTONE = 1;
     private static final int REQUEST_CODE_PERMISSIONS = 2;
+    private static final int REQUEST_CODE_PROFILE = 3;
     private static final long INVALID_ID = -1;
     private static final String PREF_KEY_DEFAULT_ALARM_RINGTONE_URI = "default_alarm_ringtone_uri";
 
@@ -125,6 +134,19 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
     private AlarmItemAdapter mAdapter;
     private View mEmptyView;
     private View mFooterView;
+
+    private ProfileManager mProfileManager;
+    private ProfilesObserver mProfileObserver;
+
+    // FIXME FIXME this is ripped out of CMSDK ProfileManager ... we should create
+    // a better way to do what it is being used for!
+    public static final String SYSTEM_PROFILES_ENABLED = "system_profiles_enabled";
+
+    private static final int MSG_PROFILE_STATUS_CHANGE = 1000;
+    // FIXME FIXME here we are getting an URI so we can register a content observer later
+    // is this still the right way to do it, or should CMSDK provide something different?
+    private final Uri PROFILES_SETTINGS_URI =
+            Settings.System.getUriFor(SYSTEM_PROFILES_ENABLED);
 
     private Bundle mRingtoneTitleCache; // Key: ringtone uri, value: ringtone title
     private ActionableToastBar mUndoBar;
@@ -146,6 +168,19 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
     private Transition mAddRemoveTransition;
     private Transition mRepeatTransition;
     private Transition mEmptyViewTransition;
+
+    private final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case MSG_PROFILE_STATUS_CHANGE:
+                    updateProfilesStatus();
+                    break;
+            }
+        }
+    };
 
     // Abstract methods to to be overridden by for post- and pre-L implementations as necessary
     protected abstract void setTimePickerListener();
@@ -206,6 +241,10 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
             previousDayMap = savedState.getBundle(KEY_PREVIOUS_DAY_MAP);
             mSelectedAlarm = savedState.getParcelable(KEY_SELECTED_ALARM);
         }
+
+        // Register profiles status
+        mProfileManager = ProfileManager.getInstance(getActivity());
+        mProfileObserver = new ProfilesObserver(mHandler);
 
         mExpandInterpolator = new DecelerateInterpolator(EXPAND_DECELERATION);
         mCollapseInterpolator = new DecelerateInterpolator(COLLAPSE_DECELERATION);
@@ -326,6 +365,12 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         }
 
         setTimePickerListener();
+
+        // Update the profile status and register the profile observer
+        // FIXME FIXME make sure we are doing this the right way as respects CM_SDK
+        getActivity().getContentResolver().registerContentObserver(
+                PROFILES_SETTINGS_URI, false, mProfileObserver);
+        updateProfilesStatus();
     }
 
     private void hideUndoBar(boolean animate, MotionEvent event) {
@@ -383,6 +428,9 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         // home was pressed, just dismiss any existing toast bar when restarting
         // the app.
         hideUndoBar(false, null);
+
+        // Unregister the profile observer
+        getActivity().getContentResolver().unregisterContentObserver(mProfileObserver);
     }
 
     private void showLabelDialog(final Alarm alarm) {
@@ -462,6 +510,14 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         startActivityForResult(intent, REQUEST_CODE_RINGTONE);
     }
 
+    private void launchProfilePicker(Alarm alarm) {
+        mSelectedAlarm = alarm;
+        final Intent intent = new Intent(ProfileManager.ACTION_PROFILE_PICKER);
+        intent.putExtra(ProfileManager.EXTRA_PROFILE_EXISTING_UUID, alarm.profile.toString());
+        intent.putExtra(ProfileManager.EXTRA_PROFILE_SHOW_NONE, true);
+        startActivityForResult(intent, REQUEST_CODE_PROFILE);
+    }
+
     private void saveRingtoneUri(Intent intent) {
         Uri uri = intent.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
         if (uri == null) {
@@ -506,12 +562,55 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         }
     }
 
+    private void saveProfile(Intent intent) {
+        final String uuid = intent.getStringExtra(ProfileManager.EXTRA_PROFILE_PICKED_UUID);
+        if (uuid != null) {
+            try {
+                mSelectedAlarm.profile = UUID.fromString(uuid);
+            } catch (IllegalArgumentException ex) {
+                mSelectedAlarm.profile = ProfileManager.NO_PROFILE;
+            }
+        } else {
+            mSelectedAlarm.profile = ProfileManager.NO_PROFILE;
+        }
+        asyncUpdateAlarm(mSelectedAlarm, false);
+    }
+
+    private boolean isProfilesEnabled() {
+        // FIXME FIXME : CMSDK should give us a way to find out if profiles are enabled
+        // FIXME also, I don't think this way is currently working either
+        boolean enabled = Settings.System.getInt(getActivity().getContentResolver(),
+                SYSTEM_PROFILES_ENABLED, 1) == 1;
+        return enabled;
+    }
+
+    private String getProfileName(Alarm alarm) {
+        if (!isProfilesEnabled() || alarm.profile.equals(ProfileManager.NO_PROFILE)) {
+            return getString(R.string.profile_no_selected);
+        }
+        Profile profile = mProfileManager.getProfile(alarm.profile);
+        if (profile == null) {
+            return getString(R.string.profile_no_selected);
+        }
+        return profile.getName();
+    }
+
+    private void updateProfilesStatus() {
+        // Need to refresh the data
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_RINGTONE:
                     saveRingtoneUri(data);
+                    break;
+                case REQUEST_CODE_PROFILE:
+                    saveProfile(data);
                     break;
                 default:
                     LogUtils.w("Unhandled request code in onActivityResult: " + requestCode);
@@ -525,6 +624,26 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         // The permission change may alter the cached ringtone titles so clear them.
         // (e.g. READ_EXTERNAL_STORAGE is granted or revoked)
         mRingtoneTitleCache.clear();
+    }
+
+    private class ProfilesObserver extends ContentObserver {
+        public ProfilesObserver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            onChange(selfChange, null);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            if (uri == null) return;
+            if (PROFILES_SETTINGS_URI.equals(uri)) {
+                mHandler.removeMessages(MSG_PROFILE_STATUS_CHANGE);
+                mHandler.sendEmptyMessage(MSG_PROFILE_STATUS_CHANGE);
+            }
+        }
     }
 
     private class AlarmItemAdapter extends CursorAdapter {
@@ -575,6 +694,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
             CheckBox vibrate;
             CheckBox increasingVolume;
             TextView ringtone;
+            TextView profile;
             View hairLine;
             View arrow;
             View collapseExpandArea;
@@ -716,6 +836,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
             holder.vibrate = (CheckBox) view.findViewById(R.id.vibrate_onoff);
             holder.increasingVolume = (CheckBox) view.findViewById(R.id.increasing_volume_onoff);
             holder.ringtone = (TextView) view.findViewById(R.id.choose_ringtone);
+            holder.profile = (TextView) view.findViewById(R.id.choose_profile);
 
             view.setTag(holder);
             return holder;
@@ -883,6 +1004,8 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
                     }
                 }
             });
+
+            itemHolder.profile.setVisibility(isProfilesEnabled() ? View.VISIBLE : View.GONE);
         }
 
         private void setAlarmItemBackgroundAndElevation(LinearLayout layout, boolean expanded) {
@@ -1063,6 +1186,18 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
                     final boolean checked = ((CheckBox) v).isChecked();
                     alarm.increasingVolume = checked;
                     asyncUpdateAlarm(alarm, false);
+                }
+            });
+
+            final String profile = getProfileName(alarm);
+            itemHolder.profile.setText(profile);
+            itemHolder.profile.setVisibility(isProfilesEnabled() ? View.VISIBLE : View.GONE);
+            itemHolder.profile.setContentDescription(
+                    mContext.getResources().getString(R.string.profile_description, profile));
+            itemHolder.profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    launchProfilePicker(alarm);
                 }
             });
         }

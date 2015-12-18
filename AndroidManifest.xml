@@ -37,6 +37,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SHUTDOWN" />
     <uses-permission android:name="cyanogenmod.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="cyanogenmod.permission.MODIFY_PROFILES" />
 
     <application android:label="@string/app_label"
                  android:name=".DeskClockApplication"
