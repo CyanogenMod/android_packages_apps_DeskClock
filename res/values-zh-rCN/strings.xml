@@ -87,7 +87,7 @@
     <string name="settings" msgid="5849739030579520686">"设置"</string>
     <string name="snooze_duration_title" msgid="1097309861110780483">"暂停时长"</string>
     <plurals name="snooze_duration" formatted="false" msgid="3112918131095248271">
-      <item quantity="other"><xliff:g id="NUMBER">%d</xliff:g> 分钟</item>
+      <item quantity="other"><xliff:g id="NUMBER">%s</xliff:g> 分钟</item>
       <item quantity="one">1 分钟</item>
     </plurals>
     <plurals name="snooze_picker_label" formatted="false" msgid="322739253661747732">
