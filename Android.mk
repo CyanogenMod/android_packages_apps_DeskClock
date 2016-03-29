@@ -28,10 +28,13 @@ LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-appcompat
 LOCAL_STATIC_JAVA_LIBRARIES += android-support-v7-gridlayout
 LOCAL_STATIC_JAVA_LIBRARIES += org.cyanogenmod.platform.sdk
 
+LOCAL_STATIC_JAVA_AAR_LIBRARIES := ambientsdk
+
 LOCAL_AAPT_FLAGS := --auto-add-overlay
 LOCAL_AAPT_FLAGS += --extra-packages android.support.v7.appcompat
 LOCAL_AAPT_FLAGS += --extra-packages android.support.v7.gridlayout
 LOCAL_AAPT_FLAGS += --extra-packages com.android.datetimepicker
+LOCAL_AAPT_FLAGS += --extra-packages com.cyanogen.ambient
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 

@@ -25,6 +25,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,7 +34,6 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.ContentObserver;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.Color;
@@ -44,11 +44,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v4.view.ViewCompat;
 import android.transition.AutoTransition;
 import android.transition.Fade;
@@ -74,6 +71,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.alarmmusic.AlarmMusicHelper;
+import com.android.alarmmusic.AlarmMusicListenerImpl;
+import com.android.alarmmusic.AlarmMusicProviderPicker;
 import com.android.deskclock.alarms.AlarmStateManager;
 import com.android.deskclock.events.Events;
 import com.android.deskclock.provider.Alarm;
@@ -88,6 +88,11 @@ import java.util.UUID;
 
 import cyanogenmod.app.Profile;
 import cyanogenmod.app.ProfileManager;
+
+import com.cyanogen.ambient.alarmmusic.AlarmMusicResult;
+import com.cyanogen.ambient.alarmmusic.AlarmMusicResultResult;
+import com.cyanogen.ambient.alarmmusic.IAlarmMusicListener;
+
 
 /**
  * AlarmClock application.
@@ -212,6 +217,8 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         mProfileManager = ProfileManager.getInstance(getActivity());
         mProfilesEnabled = mProfileManager.isProfilesEnabled();
         mCursorLoader = getLoaderManager().initLoader(0, null, this);
+
+        AlarmMusicHelper.init(getActivity());
     }
 
     @Override
@@ -486,7 +493,7 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         mAdapter.swapCursor(null);
     }
 
-    private void launchRingTonePicker(Alarm alarm) {
+    private void launchBuiltInRingTonePicker(Alarm alarm) {
         mSelectedAlarm = alarm;
         Uri oldRingtone = Alarm.NO_RINGTONE_URI.equals(alarm.alert) ? null : alarm.alert;
         final Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
@@ -494,6 +501,34 @@ public abstract class AlarmClockFragment extends DeskClockFragment implements
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false);
         startActivityForResult(intent, REQUEST_CODE_RINGTONE);
+    }
+
+    private void launchRingTonePicker(final Alarm alarm) {
+        if (AlarmMusicHelper.getAlarmMusicPluginCount() == 0) {
+            launchBuiltInRingTonePicker(alarm);
+        } else {
+            AlarmMusicProviderPicker.OnAlarmMusicProviderSelectListener listener =
+                    new AlarmMusicProviderPicker.OnAlarmMusicProviderSelectListener() {
+                        @Override
+                        public void onSelect(int provider) {
+                            if (provider == 0) {
+                                ComponentName component = AlarmMusicHelper.getComponent(provider);
+                                AlarmMusicHelper.getUri(
+                                        component,
+                                        AlarmMusicListenerImpl.getInstance(component));
+                            } else {
+                                // built-in
+                                launchBuiltInRingTonePicker(alarm);
+                            }
+                        }
+                    };
+            AlarmMusicProviderPicker dialog =
+                    new AlarmMusicProviderPicker(
+                            getActivity(),
+                            listener
+                    );
+            dialog.show();
+        }
     }
 
     private void launchProfilePicker(Alarm alarm) {

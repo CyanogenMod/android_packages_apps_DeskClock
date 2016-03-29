@@ -16,11 +16,18 @@
 
 package com.android.deskclock.alarms;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.os.Build;
 import android.os.Vibrator;
 
+import com.cyanogen.ambient.alarmmusic.AlarmMusicRequest;
+import com.cyanogen.ambient.alarmmusic.IAlarmMusicListener;
+
+
+import com.android.alarmmusic.AlarmMusicHelper;
+import com.android.alarmmusic.AlarmMusicListenerImpl;
 import com.android.deskclock.AsyncRingtonePlayer;
 import com.android.deskclock.LogUtils;
 import com.android.deskclock.provider.AlarmInstance;
@@ -40,9 +47,17 @@ public final class AlarmKlaxon {
         LogUtils.v("AlarmKlaxon.stop()");
 
         if (sStarted) {
+            ComponentName component = AlarmMusicHelper.getComponent(0);
+            AlarmMusicRequest request = new AlarmMusicRequest();
+            AlarmMusicHelper.stop(
+                    component,
+                    request,
+                    AlarmMusicListenerImpl.getInstance(component));
+            /*
             sStarted = false;
             getAsyncRingtonePlayer(context).stop();
             ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).cancel();
+            */
         }
     }
 
@@ -50,6 +65,17 @@ public final class AlarmKlaxon {
         LogUtils.v("AlarmKlaxon.start()");
         // Make sure we are stopped before starting
         stop(context);
+
+        ComponentName component = AlarmMusicHelper.getComponent(0);
+        AlarmMusicRequest request = new AlarmMusicRequest();
+        request.mUriString = AlarmMusicHelper.getUri();
+        request.mDurationSec = 0;
+        AlarmMusicHelper.play(
+                component,
+                request,
+                AlarmMusicListenerImpl.getInstance(component));
+
+        /*
 
         if (!AlarmInstance.NO_RINGTONE_URI.equals(instance.mRingtone)) {
             getAsyncRingtonePlayer(context).play(instance.mRingtone, instance.mIncreasingVolume);
@@ -66,6 +92,7 @@ public final class AlarmKlaxon {
                 vibrator.vibrate(sVibratePattern, 0);
             }
         }
+        */
 
         sStarted = true;
     }
